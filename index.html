@@ -7,7 +7,7 @@
     <!-- Bootstrap & FontAwesome -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- นำเข้าไลบรารี สแกนบาร์โค้ดผ่านกล้อง -->
+    <!-- ไลบรารี สแกนบาร์โค้ดผ่านกล้อง -->
     <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
     
     <style>
@@ -38,20 +38,19 @@
         }
         .step-dot.active { background-color: #0d6efd; color: white; box-shadow: 0 0 0 5px rgba(13, 110, 253, 0.2); }
         .step-dot.completed { background-color: #198754; color: white; }
-        label { font-weight: 600; color: #495057; margin-top: 15px; margin-bottom: 5px; font-size: 0.9rem; }
+        label { font-weight: 600; color: #495057; margin-top: 10px; margin-bottom: 5px; font-size: 0.88rem; }
         .tracking-widest { letter-spacing: 0.25em; }
         
-        /* ตกแต่งกล่องอ่านบาร์โค้ด */
         #reader { width: 100%; max-width: 500px; margin: 15px auto; display: none; border-radius: 10px; overflow: hidden; border: 2px solid #0d6efd;}
     </style>
 </head>
 <body>
 
-<div class="container max-w-100" style="max-width: 800px;">
+<div class="container max-w-100" style="max-width: 850px;">
     <div class="form-container">
         <h3 class="text-center mb-4 text-primary fw-bold">บันทึกผล Urinalysis</h3>
         
-        <!-- Progress Bar (เพิ่มเป็น 4 Steps) -->
+        <!-- Progress Bar (4 Steps) -->
         <div class="step-indicator">
             <div class="step-dot active" id="dot-0">1</div>
             <div class="step-dot" id="dot-1">2</div>
@@ -135,18 +134,114 @@
                 </div>
             </div>
 
-            <!-- ================= Step 3: ผลจากกล้องจุลทรรศน์ ================= -->
+            <!-- ================= Step 3: ผลจากกล้องจุลทรรศน์ (Manual) ================= -->
             <div class="step" id="step-2">
-                <h5 class="text-info border-bottom pb-2 mb-3"><i class="fa-solid fa-microscope me-2"></i>ส่วนที่ 3: ผลจากกล้องจุลทรรศน์ (Manual)</h5>
+                <h5 class="text-info border-bottom pb-2 mb-3">
+                    <i class="fa-solid fa-microscope me-2"></i>ส่วนที่ 3: ผลจากกล้องจุลทรรศน์ (Manual)
+                </h5>
                 <div class="row g-3">
-                    <div class="col-md-6"><label>WBC [/HPF]</label><input type="text" class="form-control" name="White blood cell ผลจากกล้องจุลทรรศน์ [/HPF]"></div>
-                    <div class="col-md-6"><label>RBC [/HPF]</label><input type="text" class="form-control" name="Red blood cell ผลจากกล้องจุลทรรศน์ [/HPF]"></div>
+                    
+                    <!-- WBC -->
+                    <div class="col-md-6">
+                        <label>White blood cell ผลจากกล้องจุลทรรศน์ [/HPF]</label>
+                        <select class="form-select" name="White blood cell ผลจากกล้องจุลทรรศน์ [/HPF]">
+                            <option value="" selected>-- เลือกค่า --</option>
+                            <option value="Negative">Negative</option>
+                            <option value="0-1">0-1</option>
+                            <option value="1-2">1-2</option>
+                            <option value="2-3">2-3</option>
+                            <option value="3-5">3-5</option>
+                            <option value="5-10">5-10</option>
+                            <option value="10-15">10-15</option>
+                            <option value="15-20">15-20</option>
+                            <option value=">20">&gt;20</option>
+                            <option value=">50">&gt;50</option>
+                            <option value=">100">&gt;100</option>
+                        </select>
+                    </div>
+
+                    <!-- RBC -->
+                    <div class="col-md-6">
+                        <label>Red blood cell ผลจากกล้องจุลทรรศน์ [/HPF]</label>
+                        <select class="form-select" name="Red blood cell ผลจากกล้องจุลทรรศน์ [/HPF]">
+                            <option value="" selected>-- เลือกค่า --</option>
+                            <option value="Negative">Negative</option>
+                            <option value="0-1">0-1</option>
+                            <option value="1-2">1-2</option>
+                            <option value="2-3">2-3</option>
+                            <option value="3-5">3-5</option>
+                            <option value="5-10">5-10</option>
+                            <option value="10-15">10-15</option>
+                            <option value="15-20">15-20</option>
+                            <option value=">20">&gt;20</option>
+                            <option value=">50">&gt;50</option>
+                            <option value=">100">&gt;100</option>
+                        </select>
+                    </div>
+
+                    <!-- Squamous Epithelial Cell -->
+                    <div class="col-md-6">
+                        <label>Squamous Epithelial Cell ผลจากกล้องจุลทรรศน์ [/HPF]</label>
+                        <select class="form-select" name="Squamous Epithelial Cell ผลจากกล้องจุลทรรศน์ [/HPF]">
+                            <option value="" selected>-- เลือกค่า --</option>
+                            <option value="Negative">Negative</option>
+                            <option value="0-1">0-1</option>
+                            <option value="1-2">1-2</option>
+                            <option value="2-3">2-3</option>
+                            <option value="3-5">3-5</option>
+                            <option value="5-10">5-10</option>
+                            <option value="10-15">10-15</option>
+                            <option value="15-20">15-20</option>
+                            <option value=">20">&gt;20</option>
+                        </select>
+                    </div>
+
+                    <!-- Mucous Thread -->
+                    <div class="col-md-6">
+                        <label>Mucous Thread  ผลจากกล้องจุลทรรศน์</label>
+                        <select class="form-select" name="Mucous Thread  ผลจากกล้องจุลทรรศน์">
+                            <option value="" selected>-- เลือกค่า --</option>
+                            <option value="Negative">Negative</option>
+                            <option value="Few">Few</option>
+                            <option value="Moderate">Moderate</option>
+                            <option value="Numerous">Numerous</option>
+                        </select>
+                    </div>
+
+                    <!-- Bacteria -->
+                    <div class="col-md-6">
+                        <label>Bacteria ผลจากกล้องจุลทรรศน์</label>
+                        <select class="form-select" name="Bacteria ผลจากกล้องจุลทรรศน์">
+                            <option value="" selected>-- เลือกค่า --</option>
+                            <option value="Negative">Negative</option>
+                            <option value="Few">Few</option>
+                            <option value="Moderate">Moderate</option>
+                            <option value="Numerous">Numerous</option>
+                        </select>
+                    </div>
+
+                    <!-- ชนิดเซลล์ เพิ่มเติม 1 -->
+                    <div class="col-md-6">
+                        <label>ชนิดเซลล์ เพิ่มเติม 1</label>
+                        <select class="form-select" name="ชนิดเซลล์ เพิ่มเติม 1">
+                            <option value="" selected>-- เลือกประเภท --</option>
+                            <option value="Epithelial">Epithelial</option>
+                            <option value="Cast">Cast</option>
+                            <option value="Crystal">Crystal</option>
+                            <option value="Yeast">Yeast</option>
+                            <option value="Sperm">Sperm</option>
+                            <option value="Dysmorphic red blood cell">Dysmorphic red blood cell</option>
+                        </select>
+                    </div>
+
                 </div>
             </div>
 
             <!-- ================= Step 4: ผลจากเครื่องอัตโนมัติ ================= -->
             <div class="step" id="step-3">
-                <h5 class="text-success border-bottom pb-2 mb-3"><i class="fa-solid fa-robot me-2"></i>ส่วนที่ 4: ผลจากเครื่องอัตโนมัติ (Auto Analyser)</h5>
+                <h5 class="text-success border-bottom pb-2 mb-3">
+                    <i class="fa-solid fa-robot me-2"></i>ส่วนที่ 4: ผลจากเครื่องอัตโนมัติ (Auto Analyser)
+                </h5>
                 <div class="row g-3">
                     <div class="col-md-6"><label>WBC (Auto)</label><input type="text" class="form-control" name="White blood cell ผลจากเครื่องอัตโนมัติ"></div>
                     <div class="col-md-6"><label>RBC (Auto)</label><input type="text" class="form-control" name="Red blood cell ผลจากเครื่องอัตโนมัติ"></div>
@@ -182,7 +277,6 @@
         }
         updateStepIndicator(n);
         
-        // โฟกัสช่องสแกนอัตโนมัติเมื่อมาถึง Step 2
         if (n === 1) { setTimeout(() => { document.getElementById("sampleId").focus(); }, 100); }
     }
 
@@ -190,7 +284,6 @@
         let x = document.getElementsByClassName("step");
         if (n == 1 && !validateForm()) return false;
         
-        // ถ้ากดถัดไป ให้ปิดกล้องมือถือถ้ายังเปิดค้างไว้
         if(html5QrCode && isScanning) { stopCameraScan(); }
 
         x[currentTab].classList.remove("active");
@@ -206,7 +299,6 @@
         for (let i = 0; i < inputs.length; i++) {
             if (!inputs[i].checkValidity()) { inputs[i].reportValidity(); valid = false; break; }
         }
-        // ตรวจสอบความถูกต้องของบาร์โค้ดใน Step 2 (index 1)
         if (currentTab === 1 && valid) {
             let sampleId = document.getElementById("sampleId").value;
             if(sampleId.length !== 13) {
@@ -261,7 +353,6 @@
                 
                 stopCameraScan();
                 
-                // ถ้าครบ 13 หลัก เด้งไปหน้าถัดไปอัตโนมัติ
                 if(cleanText.length === 13) {
                     setTimeout(() => { document.getElementById('nextBtn').click(); }, 400);
                 }
@@ -343,20 +434,17 @@
             if(result.status === 'success') {
                 alertBox.innerHTML = `<div class="alert alert-success fw-bold text-center mt-3">✅ บันทึกหมายเลข ${dataObject['หมายเลขบนตัวอย่าง 13 หลัก']} สำเร็จ!</div>`;
                 
-                // เก็บค่าหน้าแรกไว้
                 const r = document.getElementById('reviewerSelect').value;
                 const b = document.getElementById('buildingSelect').value;
                 const a = document.getElementById('analyserSelect').value;
                 
                 form.reset(); setInitialTimestamp();
                 
-                // คืนค่าหน้าแรก
                 document.getElementById('reviewerSelect').value = r;
                 document.getElementById('buildingSelect').value = b;
                 document.getElementById('analyserSelect').value = a;
                 clearBarcode();
                 
-                // วนกลับมาที่หน้าสแกนบาร์โค้ด (Step 2) เพื่อทำหลอดต่อไป
                 document.getElementsByClassName("step")[currentTab].classList.remove("active");
                 currentTab = 1; showTab(currentTab);
                 
