@@ -51,22 +51,22 @@
     <div class="form-container">
         <h3 class="text-center mb-4 text-primary fw-bold">บันทึกผล Urinalysis</h3>
         
-        <!-- Progress Bar -->
+        <!-- Progress Bar (เพิ่มเป็น 4 Steps) -->
         <div class="step-indicator">
             <div class="step-dot active" id="dot-0">1</div>
             <div class="step-dot" id="dot-1">2</div>
             <div class="step-dot" id="dot-2">3</div>
+            <div class="step-dot" id="dot-3">4</div>
         </div>
 
         <form id="urinalysisForm">
             
-            <!-- ================= หน้าที่ 1: ข้อมูลทั่วไป ================= -->
+            <!-- ================= Step 1: ข้อมูลทั่วไป ================= -->
             <div class="step active" id="step-0">
                 <h5 class="text-secondary border-bottom pb-2 mb-3">
                     <i class="fa-solid fa-clipboard-user me-2"></i>ส่วนที่ 1: ข้อมูลทั่วไป
                 </h5>
                 <div class="row g-3">
-                    
                     <div class="col-md-6">
                         <label>ประทับเวลา (Timestamp)</label>
                         <input type="datetime-local" class="form-control bg-light" name="ประทับเวลา" id="timestampInput" required readonly>
@@ -98,30 +98,34 @@
                             <option value="UC1000">UC1000</option>
                         </select>
                     </div>
+                </div>
+            </div>
 
-                    <div class="col-md-12 mt-4">
+            <!-- ================= Step 2: สแกนบาร์โค้ด ================= -->
+            <div class="step" id="step-1">
+                <h5 class="text-primary border-bottom pb-2 mb-3">
+                    <i class="fa-solid fa-barcode me-2"></i>ส่วนที่ 2: หมายเลขตัวอย่าง
+                </h5>
+                <div class="row g-3">
+                    <div class="col-md-12">
                         <label class="fs-5 text-primary">
-                            <i class="fa-solid fa-barcode me-2"></i>หมายเลขบนตัวอย่าง 13 หลัก <span class="text-danger">*</span>
+                            หมายเลขบนตัวอย่าง 13 หลัก <span class="text-danger">*</span>
                         </label>
                         
-                        <!-- ช่องกรอกข้อมูล + ปุ่มเปิดกล้อง -->
-                        <div class="input-group input-group-lg">
+                        <div class="input-group input-group-lg mt-2">
                             <input type="text" class="form-control border-primary text-center fw-bold fs-3 tracking-widest" 
                                    name="หมายเลขบนตัวอย่าง 13 หลัก" id="sampleId" 
                                    maxlength="13" placeholder="สแกน หรือ พิมพ์ตัวเลข..." required>
                             
-                            <!-- ปุ่มเปิดกล้องมือถือ -->
                             <button class="btn btn-primary" type="button" id="startCameraBtn" onclick="startCameraScan()">
                                 <i class="fa-solid fa-camera"></i> เปิดกล้อง
                             </button>
                             
-                            <!-- ปุ่มล้างข้อมูล -->
                             <button class="btn btn-outline-danger" type="button" onclick="clearBarcode()">
                                 <i class="fa-solid fa-xmark"></i>
                             </button>
                         </div>
 
-                        <!-- กรอบสำหรับแสดงวิดีโอจากกล้อง (ซ่อนไว้ก่อน) -->
                         <div id="reader"></div>
 
                         <div id="barcodeHelper" class="form-text text-center text-muted mt-2">
@@ -131,18 +135,18 @@
                 </div>
             </div>
 
-            <!-- ================= หน้าที่ 2: ผลจากกล้องจุลทรรศน์ ================= -->
-            <div class="step" id="step-1">
-                <h5 class="text-primary border-bottom pb-2 mb-3"><i class="fa-solid fa-microscope me-2"></i>ส่วนที่ 2: ผลจากกล้องจุลทรรศน์ (Manual)</h5>
+            <!-- ================= Step 3: ผลจากกล้องจุลทรรศน์ ================= -->
+            <div class="step" id="step-2">
+                <h5 class="text-info border-bottom pb-2 mb-3"><i class="fa-solid fa-microscope me-2"></i>ส่วนที่ 3: ผลจากกล้องจุลทรรศน์ (Manual)</h5>
                 <div class="row g-3">
                     <div class="col-md-6"><label>WBC [/HPF]</label><input type="text" class="form-control" name="White blood cell ผลจากกล้องจุลทรรศน์ [/HPF]"></div>
                     <div class="col-md-6"><label>RBC [/HPF]</label><input type="text" class="form-control" name="Red blood cell ผลจากกล้องจุลทรรศน์ [/HPF]"></div>
                 </div>
             </div>
 
-            <!-- ================= หน้าที่ 3: ผลจากเครื่องอัตโนมัติ ================= -->
-            <div class="step" id="step-2">
-                <h5 class="text-success border-bottom pb-2 mb-3"><i class="fa-solid fa-robot me-2"></i>ส่วนที่ 3: ผลจากเครื่องอัตโนมัติ (Auto Analyser)</h5>
+            <!-- ================= Step 4: ผลจากเครื่องอัตโนมัติ ================= -->
+            <div class="step" id="step-3">
+                <h5 class="text-success border-bottom pb-2 mb-3"><i class="fa-solid fa-robot me-2"></i>ส่วนที่ 4: ผลจากเครื่องอัตโนมัติ (Auto Analyser)</h5>
                 <div class="row g-3">
                     <div class="col-md-6"><label>WBC (Auto)</label><input type="text" class="form-control" name="White blood cell ผลจากเครื่องอัตโนมัติ"></div>
                     <div class="col-md-6"><label>RBC (Auto)</label><input type="text" class="form-control" name="Red blood cell ผลจากเครื่องอัตโนมัติ"></div>
@@ -170,13 +174,16 @@
         document.getElementById("prevBtn").style.display = (n == 0) ? "none" : "inline";
         let nextBtn = document.getElementById("nextBtn");
         if (n == (x.length - 1)) {
-            nextBtn.innerHTML = "บันทึกข้อมูลเข้า Google Sheet <i class='fa-solid fa-paper-plane ms-2'></i>";
+            nextBtn.innerHTML = "บันทึกข้อมูล <i class='fa-solid fa-paper-plane ms-2'></i>";
             nextBtn.className = "btn btn-success px-5 fw-bold";
         } else {
             nextBtn.innerHTML = "ถัดไป <i class='fa-solid fa-arrow-right ms-2'></i>";
             nextBtn.className = "btn btn-primary px-5 fw-bold";
         }
         updateStepIndicator(n);
+        
+        // โฟกัสช่องสแกนอัตโนมัติเมื่อมาถึง Step 2
+        if (n === 1) { setTimeout(() => { document.getElementById("sampleId").focus(); }, 100); }
     }
 
     function nextPrev(n) {
@@ -199,7 +206,8 @@
         for (let i = 0; i < inputs.length; i++) {
             if (!inputs[i].checkValidity()) { inputs[i].reportValidity(); valid = false; break; }
         }
-        if (currentTab === 0 && valid) {
+        // ตรวจสอบความถูกต้องของบาร์โค้ดใน Step 2 (index 1)
+        if (currentTab === 1 && valid) {
             let sampleId = document.getElementById("sampleId").value;
             if(sampleId.length !== 13) {
                 document.getElementById('barcodeHelper').innerHTML = '<span class="text-danger fw-bold">❌ กรุณากรอกหมายเลขให้ครบ 13 หลัก</span>';
@@ -235,11 +243,7 @@
         const readerElement = document.getElementById('reader');
         const startBtn = document.getElementById('startCameraBtn');
         
-        // ถ้ากำลังสแกนอยู่แล้วกดซ้ำ ให้ปิดกล้อง
-        if(isScanning) {
-            stopCameraScan();
-            return;
-        }
+        if(isScanning) { stopCameraScan(); return; }
 
         readerElement.style.display = "block";
         startBtn.innerHTML = '<i class="fa-solid fa-stop"></i> ปิดกล้อง';
@@ -247,26 +251,22 @@
 
         html5QrCode = new Html5Qrcode("reader");
         
-        // ตั้งค่ากล้อง (ใช้กล้องหลัง, รูปแบบสแกนบาร์โค้ดแนวนอน)
         html5QrCode.start(
             { facingMode: "environment" }, 
             { fps: 10, qrbox: { width: 300, height: 150 } },
             (decodedText, decodedResult) => {
-                // เมื่อสแกนสำเร็จ
-                let cleanText = decodedText.replace(/[^0-9]/g, ''); // ดึงมาแค่ตัวเลข
+                let cleanText = decodedText.replace(/[^0-9]/g, '');
                 document.getElementById('sampleId').value = cleanText;
-                
-                // แจ้งให้ input ทราบว่าค่าเปลี่ยนไปแล้ว เพื่อรัน validation สีเขียว
                 document.getElementById('sampleId').dispatchEvent(new Event('input'));
                 
-                stopCameraScan(); // ปิดกล้องทันทีที่สแกนติด
+                stopCameraScan();
                 
-                // ถ้าครบ 13 หลัก ไปหน้าถัดไปอัตโนมัติเลย!
+                // ถ้าครบ 13 หลัก เด้งไปหน้าถัดไปอัตโนมัติ
                 if(cleanText.length === 13) {
-                    setTimeout(() => { document.getElementById('nextBtn').click(); }, 500); // ดีเลย์ 0.5 วิให้เห็นเลขก่อนเด้ง
+                    setTimeout(() => { document.getElementById('nextBtn').click(); }, 400);
                 }
             },
-            (errorMessage) => { /* กำลังพยายามอ่าน... ไม่ต้องทำอะไร */ }
+            (errorMessage) => { }
         ).then(() => {
             isScanning = true;
         }).catch((err) => {
@@ -288,7 +288,7 @@
     }
 
 
-    // ================= Input Validation (สำหรับพิมพ์/ใช้เครื่องสแกน USB) =================
+    // ================= Input Validation =================
     const sampleIdInput = document.getElementById('sampleId');
 
     function clearBarcode() {
@@ -306,11 +306,10 @@
         } else {
             this.classList.replace('border-success', 'border-primary');
             this.classList.replace('border-danger', 'border-primary');
-            document.getElementById('barcodeHelper').innerHTML = 'กดปุ่ม "เปิดกล้อง" เพื่อสแกน หรือใช้เครื่องสแกนบาร์โค้ดยิงที่ช่องนี้';
+            document.getElementById('barcodeHelper').innerHTML = 'กดปุ่ม "เปิดกล้อง" หรือใช้เครื่องสแกน';
         }
     });
 
-    // ดักจับ Enter จากเครื่องสแกน USB
     sampleIdInput.addEventListener('keydown', function(event) {
         if (event.key === 'Enter') {
             event.preventDefault(); 
@@ -318,7 +317,7 @@
                 document.getElementById('nextBtn').click(); 
             } else {
                 this.classList.replace('border-primary', 'border-danger');
-                document.getElementById('barcodeHelper').innerHTML = '<span class="text-danger fw-bold">❌ สแกนไม่สมบูรณ์ (ไม่ครบ 13 หลัก)</span>';
+                document.getElementById('barcodeHelper').innerHTML = '<span class="text-danger fw-bold">❌ ไม่ครบ 13 หลัก</span>';
                 this.style.animation = 'shake 0.5s';
                 setTimeout(() => { this.style.animation = ''; }, 500);
             }
@@ -344,26 +343,29 @@
             if(result.status === 'success') {
                 alertBox.innerHTML = `<div class="alert alert-success fw-bold text-center mt-3">✅ บันทึกหมายเลข ${dataObject['หมายเลขบนตัวอย่าง 13 หลัก']} สำเร็จ!</div>`;
                 
+                // เก็บค่าหน้าแรกไว้
                 const r = document.getElementById('reviewerSelect').value;
                 const b = document.getElementById('buildingSelect').value;
                 const a = document.getElementById('analyserSelect').value;
                 
                 form.reset(); setInitialTimestamp();
                 
+                // คืนค่าหน้าแรก
                 document.getElementById('reviewerSelect').value = r;
                 document.getElementById('buildingSelect').value = b;
                 document.getElementById('analyserSelect').value = a;
                 clearBarcode();
                 
+                // วนกลับมาที่หน้าสแกนบาร์โค้ด (Step 2) เพื่อทำหลอดต่อไป
                 document.getElementsByClassName("step")[currentTab].classList.remove("active");
-                currentTab = 0; showTab(currentTab);
+                currentTab = 1; showTab(currentTab);
                 
             } else throw new Error(result.message);
         } catch (error) {
             alertBox.innerHTML = `<div class="alert alert-danger mt-3">❌ เกิดข้อผิดพลาด: ${error.message}</div>`;
         } finally {
             nextBtn.disabled = false; document.getElementById('prevBtn').disabled = false;
-            nextBtn.innerHTML = "บันทึกข้อมูลเข้า Google Sheet <i class='fa-solid fa-paper-plane ms-2'></i>";
+            nextBtn.innerHTML = "บันทึกข้อมูล <i class='fa-solid fa-paper-plane ms-2'></i>";
             setTimeout(() => { alertBox.innerHTML = ''; }, 4000);
         }
     }
