@@ -237,14 +237,97 @@
                 </div>
             </div>
 
-            <!-- ================= Step 4: ผลจากเครื่องอัตโนมัติ ================= -->
+            <!-- ================= Step 4: ผลจากเครื่องอัตโนมัติ (Auto Analyser) ================= -->
             <div class="step" id="step-3">
-                <h5 class="text-success border-bottom pb-2 mb-3">
-                    <i class="fa-solid fa-robot me-2"></i>ส่วนที่ 4: ผลจากเครื่องอัตโนมัติ (Auto Analyser)
-                </h5>
+                <div class="d-flex justify-content-between align-items-center border-bottom pb-2 mb-3">
+                    <h5 class="text-success mb-0">
+                        <i class="fa-solid fa-robot me-2"></i>ส่วนที่ 4: ผลจากเครื่องอัตโนมัติ (Auto Analyser)
+                    </h5>
+                    <!-- ปุ่ม Quick action เลือก Negative ทั้งหมด -->
+                    <button type="button" class="btn btn-outline-success btn-sm fw-bold" onclick="setAllAutoNegative()">
+                        <i class="fa-solid fa-check-double me-1"></i> เลือก Negative (ไม่พบ) ทั้งหมด
+                    </button>
+                </div>
+
                 <div class="row g-3">
-                    <div class="col-md-6"><label>WBC (Auto)</label><input type="text" class="form-control" name="White blood cell ผลจากเครื่องอัตโนมัติ"></div>
-                    <div class="col-md-6"><label>RBC (Auto)</label><input type="text" class="form-control" name="Red blood cell ผลจากเครื่องอัตโนมัติ"></div>
+                    <!-- WBC Auto -->
+                    <div class="col-md-6">
+                        <label>White blood cell ผลจากเครื่องอัตโนมัติ</label>
+                        <select class="form-select auto-select" name="White blood cell ผลจากเครื่องอัตโนมัติ">
+                            <option value="" selected>-- เลือกค่า --</option>
+                            <option value="Negative">Negative</option>
+                            <option value="0-1">0-1</option>
+                            <option value="1-2">1-2</option>
+                            <option value="2-3">2-3</option>
+                            <option value="3-5">3-5</option>
+                            <option value="5-10">5-10</option>
+                            <option value="10-15">10-15</option>
+                            <option value="15-20">15-20</option>
+                            <option value=">20">&gt;20</option>
+                            <option value=">50">&gt;50</option>
+                            <option value=">100">&gt;100</option>
+                        </select>
+                    </div>
+
+                    <!-- RBC Auto -->
+                    <div class="col-md-6">
+                        <label>Red blood cell ผลจากเครื่องอัตโนมัติ</label>
+                        <select class="form-select auto-select" name="Red blood cell ผลจากเครื่องอัตโนมัติ">
+                            <option value="" selected>-- เลือกค่า --</option>
+                            <option value="Negative">Negative</option>
+                            <option value="0-1">0-1</option>
+                            <option value="1-2">1-2</option>
+                            <option value="2-3">2-3</option>
+                            <option value="3-5">3-5</option>
+                            <option value="5-10">5-10</option>
+                            <option value="10-15">10-15</option>
+                            <option value="15-20">15-20</option>
+                            <option value=">20">&gt;20</option>
+                            <option value=">50">&gt;50</option>
+                            <option value=">100">&gt;100</option>
+                        </select>
+                    </div>
+
+                    <!-- Squamous Epithelial Cell Auto -->
+                    <div class="col-md-6">
+                        <label>Squamous epithelial cell ผลจากเครื่องอัตโนมัติ</label>
+                        <select class="form-select auto-select" name="Squamous epithelial cell ผลจากเครื่องอัตโนมัติ">
+                            <option value="" selected>-- เลือกค่า --</option>
+                            <option value="Negative">Negative</option>
+                            <option value="0-1">0-1</option>
+                            <option value="1-2">1-2</option>
+                            <option value="2-3">2-3</option>
+                            <option value="3-5">3-5</option>
+                            <option value="5-10">5-10</option>
+                            <option value="10-15">10-15</option>
+                            <option value="15-20">15-20</option>
+                            <option value=">20">&gt;20</option>
+                        </select>
+                    </div>
+
+                    <!-- Mucous Thread Auto -->
+                    <div class="col-md-6">
+                        <label>Mucous thread ผลจากเครื่องอัตโนมัติ</label>
+                        <select class="form-select auto-select" name="Mucous thread ผลจากเครื่องอัตโนมัติ">
+                            <option value="" selected>-- เลือกค่า --</option>
+                            <option value="Negative">Negative</option>
+                            <option value="Few">Few</option>
+                            <option value="Moderate">Moderate</option>
+                            <option value="Numerous">Numerous</option>
+                        </select>
+                    </div>
+
+                    <!-- Bacteria Auto -->
+                    <div class="col-md-6">
+                        <label>Bacteria ผลจากเครื่องอัตโนมัติ</label>
+                        <select class="form-select auto-select" name="Bacteria ผลจากเครื่องอัตโนมัติ">
+                            <option value="" selected>-- เลือกค่า --</option>
+                            <option value="Negative">Negative</option>
+                            <option value="Few">Few</option>
+                            <option value="Moderate">Moderate</option>
+                            <option value="Numerous">Numerous</option>
+                        </select>
+                    </div>
                 </div>
             </div>
 
@@ -325,6 +408,13 @@
         document.getElementById('timestampInput').value = now.toISOString().slice(0, 16);
     }
     setInitialTimestamp();
+
+    // ฟังก์ชันปรับค่าเครื่องอัตโนมัติให้เป็น Negative ทั้งหมด
+    function setAllAutoNegative() {
+        document.querySelectorAll('.auto-select').forEach(select => {
+            select.value = 'Negative';
+        });
+    }
 
 
     // ================= ระบบสแกน Barcode ผ่านกล้องมือถือ =================
@@ -434,19 +524,15 @@
             if(result.status === 'success') {
                 alertBox.innerHTML = `<div class="alert alert-success fw-bold text-center mt-3">✅ บันทึกหมายเลข ${dataObject['หมายเลขบนตัวอย่าง 13 หลัก']} สำเร็จ!</div>`;
                 
-                const r = document.getElementById('reviewerSelect').value;
-                const b = document.getElementById('buildingSelect').value;
-                const a = document.getElementById('analyserSelect').value;
-                
-                form.reset(); setInitialTimestamp();
-                
-                document.getElementById('reviewerSelect').value = r;
-                document.getElementById('buildingSelect').value = b;
-                document.getElementById('analyserSelect').value = a;
+                // ล้างแบบฟอร์มทั้งหมด แล้วตั้งเวลาใหม่
+                form.reset(); 
+                setInitialTimestamp();
                 clearBarcode();
                 
+                // กลับไปที่หน้าแรก (Step 1: ข้อมูลทั่วไป) ตามต้องการ
                 document.getElementsByClassName("step")[currentTab].classList.remove("active");
-                currentTab = 1; showTab(currentTab);
+                currentTab = 0; 
+                showTab(currentTab);
                 
             } else throw new Error(result.message);
         } catch (error) {
