@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Urinalysis Method Comparison</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body { 
+            background-color: #f0f2f5; 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+        }
+        .form-container {
+            background-color: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            padding: 30px;
+            margin-top: 40px;
+            margin-bottom: 40px;
+        }
+        /* ซ่อน Step ที่ยังไม่ถึง */
+        .step { display: none; animation: fadeIn 0.5s; }
+        .step.active { display: block; }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        /* Animation ตอนสแกนบาร์โค้ดผิด */
+        @keyframes shake {
+            0% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            50% { transform: translateX(5px); }
+            75% { transform: translateX(-5px); }
+            100% { transform: translateX(0); }
+        }
+        /* ตกแต่ง Progress Bar */
+        .step-indicator {
+            display: flex; justify-content: space-between;
+            margin-bottom: 30px; position: relative;
+        }
+        .step-indicator::before {
+            content: ''; position: absolute; top: 50%; left: 0; right: 0;
+            height: 3px; background-color: #e9ecef; z-index: 1; transform: translateY(-50%);
+        }
+        .step-dot {
+            width: 35px; height: 35px; border-radius: 50%;
+            background-color: #e9ecef; color: #6c757d;
+            display: flex; align-items: center; justify-content: center;
+            font-weight: bold; position: relative; z-index: 2; transition: all 0.3s;
+        }
+        .step-dot.active {
+            background-color: #0d6efd; color: white;
+            box-shadow: 0 0 0 5px rgba(13, 110, 253, 0.2);
+        }
+        .step-dot.completed { background-color: #198754; color: white; }
+        label { font-weight: 600; color: #495057; margin-top: 15px; margin-bottom: 5px; font-size: 0.9rem; }
+        .tracking-widest { letter-spacing: 0.25em; } /* ให้ตัวเลขบาร์โค้ดห่างกัน อ่านง่าย */
+    </style>
+</head>
+<body>
+
+<div class="container max-w-100" style="max-width: 800px;">
+    <div class="form-container">
+        <h3 class="text-center mb-4 text-primary fw-bold">บันทึกผล Urinalysis</h3>
+        
+        <!-- Progress Bar -->
+        <div class="step-indicator">
+            <div class="step-dot active" id="dot-0">1</div>
+            <div class="step-dot" id="dot-1">2</div>
+            <div class="step-dot" id="dot-2">3</div>
+        </div>
+
+        <form id="urinalysisForm">
+            
+            <!-- ================= หน้าที่ 1: ข้อมูลทั่วไป ================= -->
+            <div class="step active" id="step-0">
+                <h5 class="text-secondary border-bottom pb-2 mb-3">
+                    <i class="fa-solid fa-clipboard-user me-2"></i>ส่วนที่ 1: ข้อมูลทั่วไป
+                </h5>
+                <div class="row g-3">
+                    
+                    <div class="col-md-6">
+                        <label>ประทับเวลา (Timestamp)</label>
+                        <input type="datetime-local" class="form-control bg-light" name="ประทับเวลา" id="timestampInput" required readonly>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label>ผู้ทวนสอบ <span class="text-danger">*</span></label>
+                        <select class="form-select" name="ผู้ทวนสอบ" id="reviewerSelect" required>
+                            <option value="" selected disabled>-- เลือกผู้ทวนสอบ --</option>
+                            <option value="สิรินทร">สิรินทร</option>
+                            <option value="เรวดี">เรวดี</option>
+                        </select>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label>อาคาร <span class="text-danger">*</span></label>
+                        <select class="form-select" name="อาคาร" id="buildingSelect" required>
+                            <option value="" selected disabled>-- เลือกอาคาร --</option>
+                            <option value="อาคาร1">อาคาร1</option>
+                            <option value="SDMC">SDMC</option>
+                        </select>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label>Urine Sediment Analyser <span class="text-danger">*</span></label>
+                        <select class="form-select" name="Urine Sediment Analyser" id="analyserSelect" required>
+                            <option value="" selected disabled>-- เลือกเครื่อง --</option>
+                            <option value="UF5000">UF5000</option>
+                            <option value="UC1000">UC1000</option>
+                        </select>
+                    </div>
+
+                    <div class="col-md-12 mt-4">
+                        <label class="fs-5 text-primary">
+                            <i class="fa-solid fa-barcode me-2"></i>หมายเลขบนตัวอย่าง 13 หลัก <span class="text-danger">*</span>
+                        </label>
+                        <div class="input-group input-group-lg">
+                            <input type="text" class="form-control border-primary text-center fw-bold fs-3 tracking-widest" 
+                                   name="หมายเลขบนตัวอย่าง 13 หลัก" id="sampleId" 
+                                   maxlength="13" placeholder="สแกนบาร์โค้ดที่นี่..." required>
+                            <button class="btn btn-outline-danger" type="button" onclick="document.getElementById('sampleId').value=''; document.getElementById('sampleId').focus();">
+                                <i class="fa-solid fa-xmark"></i>
+                            </button>
+                        </div>
+                        <div id="barcodeHelper" class="form-text text-center text-muted mt-2">
+                            นำเคอร์เซอร์วางที่ช่องนี้แล้วสแกนบาร์โค้ด (หรือพิมพ์ตัวเลขให้ครบ 13 หลัก แล้วกด "ถัดไป")
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ================= หน้าที่ 2: ผลจากกล้องจุลทรรศน์ (เตรียมไว้สำหรับใส่ข้อมูลเพิ่ม) ================= -->
+            <div class="step" id="step-1">
+                <h5 class="text-primary border-bottom pb-2 mb-3">
+                    <i class="fa-solid fa-microscope me-2"></i>ส่วนที่ 2: ผลจากกล้องจุลทรรศน์ (Manual)
+                </h5>
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <label>White blood cell [/HPF]</label>
+                        <input type="text" class="form-control" name="White blood cell ผลจากกล้องจุลทรรศน์ [/HPF]">
+                    </div>
+                    <div class="col-md-6">
+                        <label>Red blood cell [/HPF]</label>
+                        <input type="text" class="form-control" name="Red blood cell ผลจากกล้องจุลทรรศน์ [/HPF]">
+                    </div>
+                    <div class="col-12 text-center mt-4">
+                        <span class="text-muted">... พื้นที่สำหรับใส่คอลัมน์จากกล้องจุลทรรศน์เพิ่มเติม ...</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ================= หน้าที่ 3: ผลจากเครื่องอัตโนมัติ (เตรียมไว้สำหรับใส่ข้อมูลเพิ่ม) ================= -->
+            <div class="step" id="step-2">
+                <h5 class="text-success border-bottom pb-2 mb-3">
+                    <i class="fa-solid fa-robot me-2"></i>ส่วนที่ 3: ผลจากเครื่องอัตโนมัติ (Auto Analyser)
+                </h5>
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <label>White blood cell (Auto)</label>
+                        <input type="text" class="form-control" name="White blood cell ผลจากเครื่องอัตโนมัติ">
+                    </div>
+                    <div class="col-md-6">
+                        <label>Red blood cell (Auto)</label>
+                        <input type="text" class="form-control" name="Red blood cell ผลจากเครื่องอัตโนมัติ">
+                    </div>
+                    <div class="col-12 text-center mt-4">
+                        <span class="text-muted">... พื้นที่สำหรับใส่คอลัมน์จากเครื่องอัตโนมัติเพิ่มเติม ...</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ================= ปุ่มควบคุม (Navigation Buttons) ================= -->
+            <div class="d-flex justify-content-between mt-5 pt-3 border-top">
+                <button type="button" class="btn btn-secondary px-4" id="prevBtn" onclick="nextPrev(-1)">ย้อนกลับ</button>
+                <button type="button" class="btn btn-primary px-5 fw-bold" id="nextBtn" onclick="nextPrev(1)">ถัดไป <i class="fa-solid fa-arrow-right ms-2"></i></button>
+            </div>
+            
+            <div id="alertBox" class="mt-3"></div>
+        </form>
+    </div>
+</div>
+
+<script>
+    const GAS_URL = 'ใส่_URL_ที่ได้จากการ_Deploy_Web_App_ตรงนี้';
+
+    // ================= การจัดการ Multi-step =================
+    let currentTab = 0; 
+    showTab(currentTab); 
+
+    function showTab(n) {
+        let x = document.getElementsByClassName("step");
+        x[n].classList.add("active");
+        
+        document.getElementById("prevBtn").style.display = (n == 0) ? "none" : "inline";
+        
+        let nextBtn = document.getElementById("nextBtn");
+        if (n == (x.length - 1)) {
+            nextBtn.innerHTML = "บันทึกข้อมูลเข้า Google Sheet <i class='fa-solid fa-paper-plane ms-2'></i>";
+            nextBtn.className = "btn btn-success px-5 fw-bold";
+        } else {
+            nextBtn.innerHTML = "ถัดไป <i class='fa-solid fa-arrow-right ms-2'></i>";
+            nextBtn.className = "btn btn-primary px-5 fw-bold";
+        }
+        updateStepIndicator(n);
+    }
+
+    function nextPrev(n) {
+        let x = document.getElementsByClassName("step");
+        if (n == 1 && !validateForm()) return false;
+        
+        x[currentTab].classList.remove("active");
+        currentTab = currentTab + n;
+        
+        if (currentTab >= x.length) {
+            submitForm();
+            currentTab = currentTab - n; 
+            x[currentTab].classList.add("active");
+            return false;
+        }
+        showTab(currentTab);
+    }
+
+    function validateForm() {
+        let x = document.getElementsByClassName("step");
+        let inputs = x[currentTab].querySelectorAll("input[required], select[required]");
+        let valid = true;
+        
+        for (let i = 0; i < inputs.length; i++) {
+            if (!inputs[i].checkValidity()) {
+                inputs[i].reportValidity();
+                valid = false;
+                break;
+            }
+        }
+        
+        if (currentTab === 0 && valid) {
+            let sampleId = document.getElementById("sampleId").value;
+            if(sampleId.length !== 13) {
+                document.getElementById('barcodeHelper').innerHTML = '<span class="text-danger fw-bold">❌ กรุณากรอกหมายเลขให้ครบ 13 หลัก</span>';
+                document.getElementById("sampleId").focus();
+                return false;
+            }
+        }
+        return valid;
+    }
+
+    function updateStepIndicator(n) {
+        let dots = document.getElementsByClassName("step-dot");
+        for (let i = 0; i < dots.length; i++) {
+            dots[i].className = dots[i].className.replace(" active", "").replace(" completed", "");
+            if (i < n) dots[i].className += " completed";
+        }
+        dots[n].className += " active";
+    }
+
+    // ================= Auto-fill Timestamp =================
+    function setInitialTimestamp() {
+        const now = new Date();
+        now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
+        document.getElementById('timestampInput').value = now.toISOString().slice(0, 16);
+    }
+    setInitialTimestamp();
+
+    // ================= การจัดการ Barcode Scanner =================
+    const sampleIdInput = document.getElementById('sampleId');
+
+    sampleIdInput.addEventListener('input', function() {
+        this.value = this.value.replace(/[^0-9]/g, ''); 
+        if(this.value.length === 13) {
+            this.classList.replace('border-primary', 'border-success');
+            this.classList.replace('border-danger', 'border-success');
+            document.getElementById('barcodeHelper').innerHTML = '<span class="text-success fw-bold">✅ ครบ 13 หลัก (กด ถัดไป หรือ สแกนเพื่อดำเนินการต่อ)</span>';
+        } else {
+            this.classList.replace('border-success', 'border-primary');
+            this.classList.replace('border-danger', 'border-primary');
+            document.getElementById('barcodeHelper').innerHTML = 'นำเคอร์เซอร์วางที่ช่องนี้แล้วสแกนบาร์โค้ด';
+        }
+    });
+
+    sampleIdInput.addEventListener('keydown', function(event) {
+        if (event.key === 'Enter') {
+            event.preventDefault(); 
+            if (this.value.length === 13) {
+                document.getElementById('nextBtn').click(); // สแกนผ่าน ไปหน้าถัดไปอัตโนมัติ
+            } else {
+                this.classList.replace('border-primary', 'border-danger');
+                document.getElementById('barcodeHelper').innerHTML = '<span class="text-danger fw-bold">❌ สแกนไม่สมบูรณ์ (ไม่ครบ 13 หลัก) กรุณาสแกนใหม่</span>';
+                this.style.animation = 'shake 0.5s';
+                setTimeout(() => { this.style.animation = ''; }, 500);
+            }
+        }
+    });
+
+    // ================= ส่งข้อมูลไป GAS =================
+    async function submitForm() {
+        const form = document.getElementById('urinalysisForm');
+        const nextBtn = document.getElementById('nextBtn');
+        const prevBtn = document.getElementById('prevBtn');
+        const alertBox = document.getElementById('alertBox');
+        
+        nextBtn.disabled = true; prevBtn.disabled = true;
+        nextBtn.innerHTML = '<span class="spinner-border spinner-border-sm"></span> กำลังบันทึก...';
+        
+        const formData = new FormData(form);
+        const dataObject = Object.fromEntries(formData.entries());
+
+        try {
+            const response = await fetch(GAS_URL, {
+                method: 'POST',
+                body: JSON.stringify(dataObject)
+            });
+            const result = await response.json();
+            
+            if(result.status === 'success') {
+                alertBox.innerHTML = `<div class="alert alert-success fw-bold text-center mt-3">✅ บันทึกหมายเลข ${dataObject['หมายเลขบนตัวอย่าง 13 หลัก']} สำเร็จ!</div>`;
+                
+                // เก็บค่า Dropdown เดิมไว้ก่อนล้างฟอร์ม
+                const reviewer = document.getElementById('reviewerSelect').value;
+                const building = document.getElementById('buildingSelect').value;
+                const analyser = document.getElementById('analyserSelect').value;
+                
+                form.reset();
+                setInitialTimestamp();
+                
+                // ใส่ค่า Dropdown เดิมกลับคืน
+                document.getElementById('reviewerSelect').value = reviewer;
+                document.getElementById('buildingSelect').value = building;
+                document.getElementById('analyserSelect').value = analyser;
+                
+                // รีเซ็ตสไตล์ช่องบาร์โค้ด
+                sampleIdInput.classList.replace('border-success', 'border-primary');
+                document.getElementById('barcodeHelper').innerHTML = 'นำเคอร์เซอร์วางที่ช่องนี้แล้วสแกนบาร์โค้ด';
+                
+                // กลับไปหน้าแรก
+                document.getElementsByClassName("step")[currentTab].classList.remove("active");
+                currentTab = 0;
+                showTab(currentTab);
+                
+                // รอให้สแกนบาร์โค้ดหลอดต่อไปทันที!
+                sampleIdInput.focus();
+                
+            } else throw new Error(result.message);
+        } catch (error) {
+            alertBox.innerHTML = `<div class="alert alert-danger mt-3">❌ เกิดข้อผิดพลาด: ${error.message}</div>`;
+        } finally {
+            nextBtn.disabled = false; prevBtn.disabled = false;
+            nextBtn.innerHTML = "บันทึกข้อมูลเข้า Google Sheet <i class='fa-solid fa-paper-plane ms-2'></i>";
+            setTimeout(() => { alertBox.innerHTML = ''; }, 4000);
+        }
+    }
+</script>
+
+</body>
+</html>
