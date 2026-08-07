@@ -220,11 +220,12 @@
                         </select>
                     </div>
 
-                    <!-- ชนิดเซลล์ เพิ่มเติม 1 -->
+                    <!-- ชนิดเซลล์ เพิ่มเติม 1 (อัปเดตเพิ่มตัวเลือก "ไม่พบ") -->
                     <div class="col-md-6">
                         <label>ชนิดเซลล์ เพิ่มเติม 1</label>
                         <select class="form-select" name="ชนิดเซลล์ เพิ่มเติม 1">
                             <option value="" selected>-- เลือกประเภท --</option>
+                            <option value="ไม่พบ">ไม่พบ</option>
                             <option value="Epithelial">Epithelial</option>
                             <option value="Cast">Cast</option>
                             <option value="Crystal">Crystal</option>
@@ -243,7 +244,6 @@
                     <h5 class="text-success mb-0">
                         <i class="fa-solid fa-robot me-2"></i>ส่วนที่ 4: ผลจากเครื่องอัตโนมัติ (Auto Analyser)
                     </h5>
-                    <!-- ปุ่ม Quick action เลือก Negative ทั้งหมด -->
                     <button type="button" class="btn btn-outline-success btn-sm fw-bold" onclick="setAllAutoNegative()">
                         <i class="fa-solid fa-check-double me-1"></i> เลือก Negative (ไม่พบ) ทั้งหมด
                     </button>
@@ -524,12 +524,10 @@
             if(result.status === 'success') {
                 alertBox.innerHTML = `<div class="alert alert-success fw-bold text-center mt-3">✅ บันทึกหมายเลข ${dataObject['หมายเลขบนตัวอย่าง 13 หลัก']} สำเร็จ!</div>`;
                 
-                // ล้างแบบฟอร์มทั้งหมด แล้วตั้งเวลาใหม่
                 form.reset(); 
                 setInitialTimestamp();
                 clearBarcode();
                 
-                // กลับไปที่หน้าแรก (Step 1: ข้อมูลทั่วไป) ตามต้องการ
                 document.getElementsByClassName("step")[currentTab].classList.remove("active");
                 currentTab = 0; 
                 showTab(currentTab);
