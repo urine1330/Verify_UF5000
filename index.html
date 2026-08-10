@@ -43,6 +43,9 @@
         .conditional-box {
             background-color: #f8f9fa; border-left: 4px solid #0d6efd; padding: 15px; border-radius: 6px; margin-top: 10px; display: none;
         }
+        .conditional-box-2 {
+            background-color: #f4f6f9; border-left: 4px solid #17a2b8; padding: 15px; border-radius: 6px; margin-top: 10px; display: none;
+        }
         
         #reader { width: 100%; max-width: 500px; margin: 15px auto; display: none; border-radius: 10px; overflow: hidden; border: 2px solid #0d6efd;}
     </style>
@@ -223,7 +226,9 @@
                         </select>
                     </div>
 
-                    <!-- ชนิดเซลล์ เพิ่มเติม 1 -->
+                    <div class="col-12"><hr class="my-2 text-muted"></div>
+
+                    <!-- ================= ชนิดเซลล์ เพิ่มเติม 1 ================= -->
                     <div class="col-md-6">
                         <label class="text-primary fw-bold">ชนิดเซลล์ เพิ่มเติม 1</label>
                         <select class="form-select border-primary" name="ชนิดเซลล์ เพิ่มเติม 1" id="cellType1Select" onchange="handleCellType1Change()">
@@ -238,11 +243,9 @@
                         </select>
                     </div>
 
-                    <!-- ================= เงื่อนไขย่อยสำหรับ ชนิดเซลล์ เพิ่มเติม 1 ================= -->
                     <div class="col-12">
-                        
-                        <!-- 1. Epithelial -->
-                        <div id="box-epithelial" class="conditional-box">
+                        <!-- Epithelial 1 -->
+                        <div id="box-epithelial-1" class="conditional-box">
                             <div class="row g-3">
                                 <div class="col-md-6">
                                     <label>ชนิด Epithelial เพิ่มเติม 1</label>
@@ -271,8 +274,8 @@
                             </div>
                         </div>
 
-                        <!-- 2. Cast -->
-                        <div id="box-cast" class="conditional-box">
+                        <!-- Cast 1 -->
+                        <div id="box-cast-1" class="conditional-box">
                             <div class="row g-3">
                                 <div class="col-md-6">
                                     <label>ชนิด Cast เพิ่มเติม 1</label>
@@ -300,8 +303,8 @@
                             </div>
                         </div>
 
-                        <!-- 3. Crystal -->
-                        <div id="box-crystal" class="conditional-box">
+                        <!-- Crystal 1 -->
+                        <div id="box-crystal-1" class="conditional-box">
                             <div class="row g-3">
                                 <div class="col-md-6">
                                     <label>ชนิด Crystal เพิ่มเติม 1</label>
@@ -325,8 +328,8 @@
                             </div>
                         </div>
 
-                        <!-- 4. Yeast -->
-                        <div id="box-yeast" class="conditional-box">
+                        <!-- Yeast 1 -->
+                        <div id="box-yeast-1" class="conditional-box">
                             <div class="row g-3">
                                 <div class="col-md-6">
                                     <label>ชนิด Yeast เพิ่มเติม 1</label>
@@ -348,8 +351,8 @@
                             </div>
                         </div>
 
-                        <!-- 5. Sperm -->
-                        <div id="box-sperm" class="conditional-box">
+                        <!-- Sperm 1 -->
+                        <div id="box-sperm-1" class="conditional-box">
                             <div class="row g-3">
                                 <div class="col-md-6">
                                     <label>ชนิด Sperm เพิ่มเติม 1</label>
@@ -371,16 +374,174 @@
                             </div>
                         </div>
 
-                        <!-- 6. Dysmorphic red blood cell -->
-                        <div id="box-dysmorphic" class="conditional-box">
+                        <!-- Dysmorphic 1 -->
+                        <div id="box-dysmorphic-1" class="conditional-box">
                             <div class="form-check mt-2">
-                                <input class="form-check-input" type="checkbox" name="Dysmorphic red blood cell" value="พบ" id="dysmorphicCheck">
-                                <label class="form-check-label fw-bold text-dark" for="dysmorphicCheck">
+                                <input class="form-check-input" type="checkbox" name="Dysmorphic red blood cell" value="พบ" id="dysmorphicCheck1">
+                                <label class="form-check-label fw-bold text-dark" for="dysmorphicCheck1">
                                     พบ Dysmorphic red blood cell
                                 </label>
                             </div>
                         </div>
+                    </div>
 
+                    <div class="col-12"><hr class="my-2 text-muted"></div>
+
+                    <!-- ================= ชนิดเซลล์ เพิ่มเติม 2 ================= -->
+                    <div class="col-md-6">
+                        <label class="text-info fw-bold">ชนิดเซลล์ เพิ่มเติม 2</label>
+                        <select class="form-select border-info" name="ชนิดเซลล์ เพิ่มเติม 2" id="cellType2Select" onchange="handleCellType2Change()">
+                            <option value="" selected>-- เลือกประเภท --</option>
+                            <option value="ไม่พบ">ไม่พบ</option>
+                            <option value="Epithelial">Epithelial</option>
+                            <option value="Cast">Cast</option>
+                            <option value="Crystal">Crystal</option>
+                            <option value="Yeast">Yeast</option>
+                            <option value="Sperm">Sperm</option>
+                            <option value="Dysmorphic red blood cell">Dysmorphic red blood cell</option>
+                        </select>
+                    </div>
+
+                    <div class="col-12">
+                        <!-- Epithelial 2 -->
+                        <div id="box-epithelial-2" class="conditional-box-2">
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <label>ชนิด Epithelial เพิ่มเติม 2</label>
+                                    <select class="form-select" name="ชนิด Epithelial เพิ่มเติม 2">
+                                        <option value="" selected>-- เลือกชนิด Epithelial --</option>
+                                        <option value="Bladder Epithelial">Bladder Epithelial</option>
+                                        <option value="Renal Epithelial">Renal Epithelial</option>
+                                        <option value="Caudate Epithelial">Caudate Epithelial</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6">
+                                    <label>Epithelial Cell เพิ่มเติม 2 ผลจากกล้องจุลทรรศน์ [/HPF]</label>
+                                    <select class="form-select" name="Epithelial Cell เพิ่มเติม 2 ผลจากกล้องจุลทรรศน์ [/HPF]">
+                                        <option value="" selected>-- เลือกค่า --</option>
+                                        <option value="Negative">Negative</option>
+                                        <option value="0-1">0-1</option>
+                                        <option value="1-2">1-2</option>
+                                        <option value="2-3">2-3</option>
+                                        <option value="3-5">3-5</option>
+                                        <option value="5-10">5-10</option>
+                                        <option value="10-15">10-15</option>
+                                        <option value="15-20">15-20</option>
+                                        <option value=">20">&gt;20</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Cast 2 -->
+                        <div id="box-cast-2" class="conditional-box-2">
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <label>ชนิด Cast เพิ่มเติม 2</label>
+                                    <select class="form-select" name="ชนิด Cast เพิ่มเติม 2">
+                                        <option value="" selected>-- เลือกชนิด Cast --</option>
+                                        <option value="Hyaline cast">Hyaline cast</option>
+                                        <option value="Granular cast">Granular cast</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6">
+                                    <label>Cast  เพิ่มเติม 2 ผลจากกล้องจุลทรรศน์ [/LPF]</label>
+                                    <select class="form-select" name="Cast  เพิ่มเติม 2 ผลจากกล้องจุลทรรศน์ [/LPF]">
+                                        <option value="" selected>-- เลือกค่า --</option>
+                                        <option value="Negative">Negative</option>
+                                        <option value="0-1">0-1</option>
+                                        <option value="1-2">1-2</option>
+                                        <option value="2-3">2-3</option>
+                                        <option value="3-5">3-5</option>
+                                        <option value="5-10">5-10</option>
+                                        <option value="10-15">10-15</option>
+                                        <option value="15-20">15-20</option>
+                                        <option value=">20">&gt;20</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Crystal 2 -->
+                        <div id="box-crystal-2" class="conditional-box-2">
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <label>ชนิด Crystal เพิ่มเติม 2</label>
+                                    <select class="form-select" name="ชนิด Crystal เพิ่มเติม 2">
+                                        <option value="" selected>-- เลือกชนิด Crystal --</option>
+                                        <option value="Calcium Oxalate crystal">Calcium Oxalate crystal</option>
+                                        <option value="Uric acid crystal">Uric acid crystal</option>
+                                        <option value="Triple phosphate crystal">Triple phosphate crystal</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6">
+                                    <label>Crystal เพิ่มเติม 2 ผลจากกล้องจุลทรรศน์ [/HPF]</label>
+                                    <select class="form-select" name="Crystal เพิ่มเติม 2 ผลจากกล้องจุลทรรศน์ [/HPF]">
+                                        <option value="" selected>-- เลือกค่า --</option>
+                                        <option value="Negative">Negative</option>
+                                        <option value="Few">Few</option>
+                                        <option value="Moderate">Moderate</option>
+                                        <option value="Numerous">Numerous</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Yeast 2 -->
+                        <div id="box-yeast-2" class="conditional-box-2">
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <label>ชนิด Yeast เพิ่มเติม 2</label>
+                                    <select class="form-select" name="Yeast เพิ่มเติม 2">
+                                        <option value="" selected>-- เลือกชนิด Yeast --</option>
+                                        <option value="Budding yeast">Budding yeast</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6">
+                                    <label>Yeast เพิ่มเติม 2 ผลจากกล้องจุลทรรศน์ [/HPF]</label>
+                                    <select class="form-select" name="Yeast เพิ่มเติม 2 ผลจากกล้องจุลทรรศน์ [/HPF]">
+                                        <option value="" selected>-- เลือกค่า --</option>
+                                        <option value="Negative">Negative</option>
+                                        <option value="Few">Few</option>
+                                        <option value="Moderate">Moderate</option>
+                                        <option value="Numerous">Numerous</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Sperm 2 -->
+                        <div id="box-sperm-2" class="conditional-box-2">
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <label>ชนิด Sperm เพิ่มเติม 2</label>
+                                    <select class="form-select" name="Sperm เพิ่มเติม 2">
+                                        <option value="" selected>-- เลือกชนิด Sperm --</option>
+                                        <option value="Spermatozoa">Spermatozoa</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6">
+                                    <label>Sperm เพิ่มเติม 2 ผลจากกล้องจุลทรรศน์ [/HPF]</label>
+                                    <select class="form-select" name="Sperm เพิ่มเติม 2 ผลจากกล้องจุลทรรศน์ [/HPF]">
+                                        <option value="" selected>-- เลือกค่า --</option>
+                                        <option value="Negative">Negative</option>
+                                        <option value="Few">Few</option>
+                                        <option value="Moderate">Moderate</option>
+                                        <option value="Numerous">Numerous</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Dysmorphic 2 -->
+                        <div id="box-dysmorphic-2" class="conditional-box-2">
+                            <div class="form-check mt-2">
+                                <input class="form-check-input" type="checkbox" name="Dysmorphic red blood cell" value="พบ" id="dysmorphicCheck2">
+                                <label class="form-check-label fw-bold text-dark" for="dysmorphicCheck2">
+                                    พบ Dysmorphic red blood cell
+                                </label>
+                            </div>
+                        </div>
                     </div>
 
                 </div>
@@ -557,32 +718,47 @@
     }
     setInitialTimestamp();
 
-    // ================= ระบบจัดการ dynamic fields ตามชนิดเซลล์เพิ่มเติม 1 =================
+    // ================= Dynamic fields: ชนิดเซลล์ เพิ่มเติม 1 =================
     function handleCellType1Change() {
         const selectedValue = document.getElementById('cellType1Select').value;
         const boxes = document.querySelectorAll('.conditional-box');
         
-        // ซ่อนกล่องเงื่อนไขทั้งหมดก่อน + เคลียร์ค่าที่เลือกไว้
         boxes.forEach(box => {
             box.style.display = 'none';
             box.querySelectorAll('select').forEach(sel => sel.value = '');
             box.querySelectorAll('input[type="checkbox"]').forEach(chk => chk.checked = false);
         });
 
-        // แสดงกล่องตามค่าที่เลือก
-        if (selectedValue === 'Epithelial') {
-            document.getElementById('box-epithelial').style.display = 'block';
-        } else if (selectedValue === 'Cast') {
-            document.getElementById('box-cast').style.display = 'block';
-        } else if (selectedValue === 'Crystal') {
-            document.getElementById('box-crystal').style.display = 'block';
-        } else if (selectedValue === 'Yeast') {
-            document.getElementById('box-yeast').style.display = 'block';
-        } else if (selectedValue === 'Sperm') {
-            document.getElementById('box-sperm').style.display = 'block';
-        } else if (selectedValue === 'Dysmorphic red blood cell') {
-            document.getElementById('box-dysmorphic').style.display = 'block';
-            document.getElementById('dysmorphicCheck').checked = true; // เลือกอัตโนมัติ
+        if (selectedValue === 'Epithelial') document.getElementById('box-epithelial-1').style.display = 'block';
+        else if (selectedValue === 'Cast') document.getElementById('box-cast-1').style.display = 'block';
+        else if (selectedValue === 'Crystal') document.getElementById('box-crystal-1').style.display = 'block';
+        else if (selectedValue === 'Yeast') document.getElementById('box-yeast-1').style.display = 'block';
+        else if (selectedValue === 'Sperm') document.getElementById('box-sperm-1').style.display = 'block';
+        else if (selectedValue === 'Dysmorphic red blood cell') {
+            document.getElementById('box-dysmorphic-1').style.display = 'block';
+            document.getElementById('dysmorphicCheck1').checked = true;
+        }
+    }
+
+    // ================= Dynamic fields: ชนิดเซลล์ เพิ่มเติม 2 =================
+    function handleCellType2Change() {
+        const selectedValue = document.getElementById('cellType2Select').value;
+        const boxes = document.querySelectorAll('.conditional-box-2');
+        
+        boxes.forEach(box => {
+            box.style.display = 'none';
+            box.querySelectorAll('select').forEach(sel => sel.value = '');
+            box.querySelectorAll('input[type="checkbox"]').forEach(chk => chk.checked = false);
+        });
+
+        if (selectedValue === 'Epithelial') document.getElementById('box-epithelial-2').style.display = 'block';
+        else if (selectedValue === 'Cast') document.getElementById('box-cast-2').style.display = 'block';
+        else if (selectedValue === 'Crystal') document.getElementById('box-crystal-2').style.display = 'block';
+        else if (selectedValue === 'Yeast') document.getElementById('box-yeast-2').style.display = 'block';
+        else if (selectedValue === 'Sperm') document.getElementById('box-sperm-2').style.display = 'block';
+        else if (selectedValue === 'Dysmorphic red blood cell') {
+            document.getElementById('box-dysmorphic-2').style.display = 'block';
+            document.getElementById('dysmorphicCheck2').checked = true;
         }
     }
 
@@ -702,7 +878,8 @@
                 form.reset(); 
                 setInitialTimestamp();
                 clearBarcode();
-                handleCellType1Change(); // รีเซ็ตการซ่อนแสดงช่องเงื่อนไข
+                handleCellType1Change(); // รีเซ็ต dynamic box 1
+                handleCellType2Change(); // รีเซ็ต dynamic box 2
                 
                 document.getElementsByClassName("step")[currentTab].classList.remove("active");
                 currentTab = 0; 
