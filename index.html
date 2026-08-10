@@ -40,6 +40,9 @@
         .step-dot.completed { background-color: #198754; color: white; }
         label { font-weight: 600; color: #495057; margin-top: 10px; margin-bottom: 5px; font-size: 0.88rem; }
         .tracking-widest { letter-spacing: 0.25em; }
+        .conditional-box {
+            background-color: #f8f9fa; border-left: 4px solid #0d6efd; padding: 15px; border-radius: 6px; margin-top: 10px; display: none;
+        }
         
         #reader { width: 100%; max-width: 500px; margin: 15px auto; display: none; border-radius: 10px; overflow: hidden; border: 2px solid #0d6efd;}
     </style>
@@ -75,7 +78,7 @@
                         <label>ผู้ทวนสอบ <span class="text-danger">*</span></label>
                         <select class="form-select" name="ผู้ทวนสอบ" id="reviewerSelect" required>
                             <option value="" selected disabled>-- เลือกผู้ทวนสอบ --</option>
-                            <option value="สิรินทรA">สิรินทรA</option>
+                            <option value="สิรินทร">สิรินทร</option>
                             <option value="เรวดี">เรวดี</option>
                         </select>
                     </div>
@@ -222,8 +225,8 @@
 
                     <!-- ชนิดเซลล์ เพิ่มเติม 1 -->
                     <div class="col-md-6">
-                        <label>ชนิดเซลล์ เพิ่มเติม 1</label>
-                        <select class="form-select" name="ชนิดเซลล์ เพิ่มเติม 1">
+                        <label class="text-primary fw-bold">ชนิดเซลล์ เพิ่มเติม 1</label>
+                        <select class="form-select border-primary" name="ชนิดเซลล์ เพิ่มเติม 1" id="cellType1Select" onchange="handleCellType1Change()">
                             <option value="" selected>-- เลือกประเภท --</option>
                             <option value="ไม่พบ">ไม่พบ</option>
                             <option value="Epithelial">Epithelial</option>
@@ -233,6 +236,151 @@
                             <option value="Sperm">Sperm</option>
                             <option value="Dysmorphic red blood cell">Dysmorphic red blood cell</option>
                         </select>
+                    </div>
+
+                    <!-- ================= เงื่อนไขย่อยสำหรับ ชนิดเซลล์ เพิ่มเติม 1 ================= -->
+                    <div class="col-12">
+                        
+                        <!-- 1. Epithelial -->
+                        <div id="box-epithelial" class="conditional-box">
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <label>ชนิด Epithelial เพิ่มเติม 1</label>
+                                    <select class="form-select" name="ชนิด Epithelial เพิ่มเติม 1">
+                                        <option value="" selected>-- เลือกชนิด Epithelial --</option>
+                                        <option value="Bladder Epithelial">Bladder Epithelial</option>
+                                        <option value="Renal Epithelial">Renal Epithelial</option>
+                                        <option value="Caudate Epithelial">Caudate Epithelial</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6">
+                                    <label>Epithelial Cell เพิ่มเติม1  ผลจากกล้องจุลทรรศน์ [/HPF]</label>
+                                    <select class="form-select" name="Epithelial Cell เพิ่มเติม1  ผลจากกล้องจุลทรรศน์ [/HPF]">
+                                        <option value="" selected>-- เลือกค่า --</option>
+                                        <option value="Negative">Negative</option>
+                                        <option value="0-1">0-1</option>
+                                        <option value="1-2">1-2</option>
+                                        <option value="2-3">2-3</option>
+                                        <option value="3-5">3-5</option>
+                                        <option value="5-10">5-10</option>
+                                        <option value="10-15">10-15</option>
+                                        <option value="15-20">15-20</option>
+                                        <option value=">20">&gt;20</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 2. Cast -->
+                        <div id="box-cast" class="conditional-box">
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <label>ชนิด Cast เพิ่มเติม 1</label>
+                                    <select class="form-select" name="ชนิด Cast เพิ่มเติม 1">
+                                        <option value="" selected>-- เลือกชนิด Cast --</option>
+                                        <option value="Hyaline cast">Hyaline cast</option>
+                                        <option value="Granular cast">Granular cast</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6">
+                                    <label>Cast  เพิ่มเติม 1 ผลจากกล้องจุลทรรศน์ [/LPF]</label>
+                                    <select class="form-select" name="Cast  เพิ่มเติม 1 ผลจากกล้องจุลทรรศน์ [/LPF]">
+                                        <option value="" selected>-- เลือกค่า --</option>
+                                        <option value="Negative">Negative</option>
+                                        <option value="0-1">0-1</option>
+                                        <option value="1-2">1-2</option>
+                                        <option value="2-3">2-3</option>
+                                        <option value="3-5">3-5</option>
+                                        <option value="5-10">5-10</option>
+                                        <option value="10-15">10-15</option>
+                                        <option value="15-20">15-20</option>
+                                        <option value=">20">&gt;20</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 3. Crystal -->
+                        <div id="box-crystal" class="conditional-box">
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <label>ชนิด Crystal เพิ่มเติม 1</label>
+                                    <select class="form-select" name="ชนิด Crystal เพิ่มเติม 1">
+                                        <option value="" selected>-- เลือกชนิด Crystal --</option>
+                                        <option value="Calcium Oxalate crystal">Calcium Oxalate crystal</option>
+                                        <option value="Uric acid crystal">Uric acid crystal</option>
+                                        <option value="Triple phosphate crystal">Triple phosphate crystal</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6">
+                                    <label>Crystal เพิ่มเติม 1 ผลจากกล้องจุลทรรศน์ [/HPF]</label>
+                                    <select class="form-select" name="Crystal เพิ่มเติม 1 ผลจากกล้องจุลทรรศน์ [/HPF]">
+                                        <option value="" selected>-- เลือกค่า --</option>
+                                        <option value="Negative">Negative</option>
+                                        <option value="Few">Few</option>
+                                        <option value="Moderate">Moderate</option>
+                                        <option value="Numerous">Numerous</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 4. Yeast -->
+                        <div id="box-yeast" class="conditional-box">
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <label>ชนิด Yeast เพิ่มเติม 1</label>
+                                    <select class="form-select" name="Yeast เพิ่มเติม 1">
+                                        <option value="" selected>-- เลือกชนิด Yeast --</option>
+                                        <option value="Budding yeast">Budding yeast</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6">
+                                    <label>Yeast เพิ่มเติม 1 ผลจากกล้องจุลทรรศน์ [/HPF]</label>
+                                    <select class="form-select" name="Yeast เพิ่มเติม 1 ผลจากกล้องจุลทรรศน์ [/HPF]">
+                                        <option value="" selected>-- เลือกค่า --</option>
+                                        <option value="Negative">Negative</option>
+                                        <option value="Few">Few</option>
+                                        <option value="Moderate">Moderate</option>
+                                        <option value="Numerous">Numerous</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 5. Sperm -->
+                        <div id="box-sperm" class="conditional-box">
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <label>ชนิด Sperm เพิ่มเติม 1</label>
+                                    <select class="form-select" name="Sperm เพิ่มเติม 1">
+                                        <option value="" selected>-- เลือกชนิด Sperm --</option>
+                                        <option value="Spermatozoa">Spermatozoa</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6">
+                                    <label>Sperm เพิ่มเติม 1 ผลจากกล้องจุลทรรศน์ [/HPF]</label>
+                                    <select class="form-select" name="Sperm เพิ่มเติม 1 ผลจากกล้องจุลทรรศน์ [/HPF]">
+                                        <option value="" selected>-- เลือกค่า --</option>
+                                        <option value="Negative">Negative</option>
+                                        <option value="Few">Few</option>
+                                        <option value="Moderate">Moderate</option>
+                                        <option value="Numerous">Numerous</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 6. Dysmorphic red blood cell -->
+                        <div id="box-dysmorphic" class="conditional-box">
+                            <div class="form-check mt-2">
+                                <input class="form-check-input" type="checkbox" name="Dysmorphic red blood cell" value="พบ" id="dysmorphicCheck">
+                                <label class="form-check-label fw-bold text-dark" for="dysmorphicCheck">
+                                    พบ Dysmorphic red blood cell
+                                </label>
+                            </div>
+                        </div>
+
                     </div>
 
                 </div>
@@ -288,7 +436,7 @@
                         </select>
                     </div>
 
-                    <!-- Squamous Epithelial Cell Auto (ตรงกับหัวคอลัมน์แล้ว) -->
+                    <!-- Squamous Epithelial Cell Auto -->
                     <div class="col-md-6">
                         <label>Squamous Epithelial Cell ผลจากเครื่องอัตโนมัติ</label>
                         <select class="form-select auto-select" name="Squamous Epithelial Cell ผลจากเครื่องอัตโนมัติ">
@@ -305,7 +453,7 @@
                         </select>
                     </div>
 
-                    <!-- Mucous Thread Auto (ตรงกับหัวคอลัมน์และเว้นวรรคแล้ว) -->
+                    <!-- Mucous Thread Auto -->
                     <div class="col-md-6">
                         <label>Mucous Thread  ผลจากเครื่องอัตโนมัติ</label>
                         <select class="form-select auto-select" name="Mucous Thread  ผลจากเครื่องอัตโนมัติ">
@@ -343,7 +491,7 @@
 </div>
 
 <script>
-    const GAS_URL = 'https://script.google.com/macros/s/AKfycbymiw0hym5BPBm5mfpMXo5_gXrLTf6Oykq9UAwmxAy4SwYM9yovZtsc-DBucxFs24F4Vw/exec';
+    const GAS_URL = 'ใส่_URL_ที่ได้จากการ_Deploy_Web_App_ตรงนี้';
 
     // ================= การจัดการ Multi-step =================
     let currentTab = 0; showTab(currentTab); 
@@ -409,7 +557,36 @@
     }
     setInitialTimestamp();
 
-    // ฟังก์ชันปรับค่าเครื่องอัตโนมัติให้เป็น Negative ทั้งหมด
+    // ================= ระบบจัดการ dynamic fields ตามชนิดเซลล์เพิ่มเติม 1 =================
+    function handleCellType1Change() {
+        const selectedValue = document.getElementById('cellType1Select').value;
+        const boxes = document.querySelectorAll('.conditional-box');
+        
+        // ซ่อนกล่องเงื่อนไขทั้งหมดก่อน + เคลียร์ค่าที่เลือกไว้
+        boxes.forEach(box => {
+            box.style.display = 'none';
+            box.querySelectorAll('select').forEach(sel => sel.value = '');
+            box.querySelectorAll('input[type="checkbox"]').forEach(chk => chk.checked = false);
+        });
+
+        // แสดงกล่องตามค่าที่เลือก
+        if (selectedValue === 'Epithelial') {
+            document.getElementById('box-epithelial').style.display = 'block';
+        } else if (selectedValue === 'Cast') {
+            document.getElementById('box-cast').style.display = 'block';
+        } else if (selectedValue === 'Crystal') {
+            document.getElementById('box-crystal').style.display = 'block';
+        } else if (selectedValue === 'Yeast') {
+            document.getElementById('box-yeast').style.display = 'block';
+        } else if (selectedValue === 'Sperm') {
+            document.getElementById('box-sperm').style.display = 'block';
+        } else if (selectedValue === 'Dysmorphic red blood cell') {
+            document.getElementById('box-dysmorphic').style.display = 'block';
+            document.getElementById('dysmorphicCheck').checked = true; // เลือกอัตโนมัติ
+        }
+    }
+
+    // ปรับค่าเครื่องอัตโนมัติเป็น Negative ทั้งหมด
     function setAllAutoNegative() {
         document.querySelectorAll('.auto-select').forEach(select => {
             select.value = 'Negative';
@@ -525,6 +702,7 @@
                 form.reset(); 
                 setInitialTimestamp();
                 clearBarcode();
+                handleCellType1Change(); // รีเซ็ตการซ่อนแสดงช่องเงื่อนไข
                 
                 document.getElementsByClassName("step")[currentTab].classList.remove("active");
                 currentTab = 0; 
