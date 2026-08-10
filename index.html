@@ -821,7 +821,7 @@
 </div>
 
 <script>
-    const GAS_URL = 'ใส่_URL_ที่ได้จากการ_Deploy_Web_App_ตรงนี้';
+    const GAS_URL = 'https://script.google.com/macros/s/AKfycbymiw0hym5BPBm5mfpMXo5_gXrLTf6Oykq9UAwmxAy4SwYM9yovZtsc-DBucxFs24F4Vw/exec';
 
     // ================= การจัดการ Multi-step =================
     let currentTab = 0; showTab(currentTab); 
@@ -1073,7 +1073,7 @@
         }
     });
 
-    // ================= ส่งข้อมูลไป GAS =================
+    // ================= ส่งข้อมูลไป GAS (พร้อมแปลงช่วงตัวเลขเติม ' นำหน้า) =================
     async function submitForm() {
         const form = document.getElementById('urinalysisForm');
         const nextBtn = document.getElementById('nextBtn');
@@ -1083,7 +1083,16 @@
         nextBtn.innerHTML = '<span class="spinner-border spinner-border-sm"></span> กำลังบันทึก...';
         
         const formData = new FormData(form);
-        const dataObject = Object.fromEntries(formData.entries());
+        const dataObject = {};
+
+        // ตรวจสอบข้อมูลก่อนส่ง: ถ้าเป็นค่าช่วงตัวเลข (เช่น 0-1, 1-2, >20) ให้เติม ' นำหน้า
+        for (let [key, value] of formData.entries()) {
+            if (/^(\d+-\d+|>\d+)$/.test(value)) {
+                dataObject[key] = "'" + value;
+            } else {
+                dataObject[key] = value;
+            }
+        }
 
         try {
             const response = await fetch(GAS_URL, { method: 'POST', body: JSON.stringify(dataObject) });
