@@ -78,7 +78,8 @@
                 <div class="row g-3">
                     <div class="col-md-6">
                         <label>ประทับเวลา (Timestamp)</label>
-                        <input type="datetime-local" class="form-control bg-light" name="ประทับเวลา" id="timestampInput" required readonly>
+                        <!-- เปลี่ยนประเภทเป็น text เพื่อให้ใส่ Format DD/MM/YYYY, HH:mm:ss ได้ -->
+                        <input type="text" class="form-control bg-light" name="ประทับเวลา" id="timestampInput" required readonly>
                     </div>
 
                     <div class="col-md-6">
@@ -821,7 +822,7 @@
 </div>
 
 <script>
-    const GAS_URL = 'https://script.google.com/macros/s/AKfycbymiw0hym5BPBm5mfpMXo5_gXrLTf6Oykq9UAwmxAy4SwYM9yovZtsc-DBucxFs24F4Vw/exec';
+    const GAS_URL = 'ใส่_URL_ที่ได้จากการ_Deploy_Web_App_ตรงนี้';
 
     // ================= การจัดการ Multi-step =================
     let currentTab = 0; showTab(currentTab); 
@@ -880,10 +881,20 @@
         dots[n].className += " active";
     }
 
-    // Auto Timestamp
+    // ================= Auto Timestamp Format DD/MM/YYYY, HH:mm:ss =================
     function setInitialTimestamp() {
-        const now = new Date(); now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
-        document.getElementById('timestampInput').value = now.toISOString().slice(0, 16);
+        const now = new Date();
+        const day = String(now.getDate()).padStart(2, '0');
+        const month = String(now.getMonth() + 1).padStart(2, '0');
+        const year = now.getFullYear();
+        const hours = String(now.getHours()).padStart(2, '0');
+        const minutes = String(now.getMinutes()).padStart(2, '0');
+        const seconds = String(now.getSeconds()).padStart(2, '0');
+        
+        // รูปแบบ 29/12/2025, 14:54:56
+        const formattedDate = `${day}/${month}/${year}, ${hours}:${minutes}:${seconds}`;
+        document.getElementById('timestampInput').value = formattedDate;
+        return formattedDate;
     }
     setInitialTimestamp();
 
@@ -1073,6 +1084,9 @@
         const nextBtn = document.getElementById('nextBtn');
         const alertBox = document.getElementById('alertBox');
         
+        // อัปเดตเวลาให้เป็นเวลา ณ วินาทีที่กดส่งบันทึกจริง
+        setInitialTimestamp();
+
         nextBtn.disabled = true; document.getElementById('prevBtn').disabled = true;
         nextBtn.innerHTML = '<span class="spinner-border spinner-border-sm"></span> กำลังบันทึก...';
         
