@@ -39,7 +39,7 @@
         .step-dot.active { background-color: #0d6efd; color: white; box-shadow: 0 0 0 5px rgba(13, 110, 253, 0.2); }
         .step-dot.completed { background-color: #198754; color: white; }
         label { font-weight: 600; color: #495057; margin-top: 10px; margin-bottom: 5px; font-size: 0.88rem; }
-        .tracking-widest { letter-spacing: 0.15em; }
+        .tracking-widest { letter-spacing: 0.25em; }
         
         .conditional-box {
             background-color: #f8f9fa; border-left: 4px solid #0d6efd; padding: 15px; border-radius: 6px; margin-top: 10px; display: none;
@@ -78,15 +78,15 @@
                 <div class="row g-3">
                     <div class="col-md-6">
                         <label>ประทับเวลา (Timestamp)</label>
-                        <input type="text" class="form-control bg-light" name="ประทับเวลา" id="timestampInput" required readonly>
+                        <input type="datetime-local" class="form-control bg-light" name="ประทับเวลา" id="timestampInput" required readonly>
                     </div>
 
                     <div class="col-md-6">
                         <label>ผู้ทวนสอบ <span class="text-danger">*</span></label>
                         <select class="form-select" name="ผู้ทวนสอบ" id="reviewerSelect" required>
                             <option value="" selected disabled>-- เลือกผู้ทวนสอบ --</option>
-                            <option value="สิรินทร">Aสิรินทร</option>
-                            <option value="Aเรวดี">Aเรวดี</option>
+                            <option value="สิรินทร">สิรินทร</option>
+                            <option value="เรวดี">เรวดี</option>
                         </select>
                     </div>
 
@@ -118,13 +118,13 @@
                 <div class="row g-3">
                     <div class="col-md-12">
                         <label class="fs-5 text-primary">
-                            หมายเลขบนตัวอย่าง (9 - 20 หลัก) <span class="text-danger">*</span>
+                            หมายเลขบนตัวอย่าง 13 หลัก <span class="text-danger">*</span>
                         </label>
                         
                         <div class="input-group input-group-lg mt-2">
                             <input type="text" class="form-control border-primary text-center fw-bold fs-3 tracking-widest" 
-                                   name="หมายเลขบนตัวอย่าง" id="sampleId" 
-                                   maxlength="20" placeholder="สแกน หรือ พิมพ์ตัวเลข 9-20 หลัก..." required>
+                                   name="หมายเลขบนตัวอย่าง 13 หลัก" id="sampleId" 
+                                   maxlength="13" placeholder="สแกน หรือ พิมพ์ตัวเลข..." required>
                             
                             <button class="btn btn-primary" type="button" id="startCameraBtn" onclick="startCameraScan()">
                                 <i class="fa-solid fa-camera"></i> เปิดกล้อง
@@ -138,7 +138,7 @@
                         <div id="reader"></div>
 
                         <div id="barcodeHelper" class="form-text text-center text-muted mt-2">
-                            กดปุ่ม "เปิดกล้อง" เพื่อสแกน หรือใช้เครื่องสแกนบาร์โค้ดยิงที่ช่องนี้ (9-20 หลัก)
+                            กดปุ่ม "เปิดกล้อง" เพื่อสแกน หรือใช้เครื่องสแกนบาร์โค้ดยิงที่ช่องนี้
                         </div>
                     </div>
                 </div>
@@ -862,8 +862,8 @@
         }
         if (currentTab === 1 && valid) {
             let sampleId = document.getElementById("sampleId").value;
-            if(sampleId.length < 9 || sampleId.length > 20) {
-                document.getElementById('barcodeHelper').innerHTML = '<span class="text-danger fw-bold">❌ กรุณากรอกหมายเลข 9 - 20 หลัก</span>';
+            if(sampleId.length !== 13) {
+                document.getElementById('barcodeHelper').innerHTML = '<span class="text-danger fw-bold">❌ กรุณากรอกหมายเลขให้ครบ 13 หลัก</span>';
                 document.getElementById("sampleId").focus();
                 return false;
             }
@@ -880,17 +880,10 @@
         dots[n].className += " active";
     }
 
-    // Auto Timestamp Format: DD/MM/YYYY, HH:mm:ss
+    // Auto Timestamp
     function setInitialTimestamp() {
-        const now = new Date();
-        const day = String(now.getDate()).padStart(2, '0');
-        const month = String(now.getMonth() + 1).padStart(2, '0');
-        const year = now.getFullYear();
-        const hours = String(now.getHours()).padStart(2, '0');
-        const minutes = String(now.getMinutes()).padStart(2, '0');
-        const seconds = String(now.getSeconds()).padStart(2, '0');
-        
-        document.getElementById('timestampInput').value = `${day}/${month}/${year}, ${hours}:${minutes}:${seconds}`;
+        const now = new Date(); now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
+        document.getElementById('timestampInput').value = now.toISOString().slice(0, 16);
     }
     setInitialTimestamp();
 
@@ -915,13 +908,14 @@
             document.getElementById('dysmorphicCheck1').checked = true;
         }
 
+        // --- ควบคุมการแสดงผล "ชนิดเซลล์ เพิ่มเติม 2" ---
         const wrapper2 = document.getElementById('wrapper-celltype2');
         if (selectedValue !== '' && selectedValue !== 'ไม่พบ') {
             wrapper2.style.display = 'block';
         } else {
             wrapper2.style.display = 'none';
             document.getElementById('cellType2Select').value = '';
-            handleCellType2Change();
+            handleCellType2Change(); // ล้างค่าเซลล์ 2 และ 3 ทั้งหมด
         }
     }
 
@@ -946,13 +940,14 @@
             document.getElementById('dysmorphicCheck2').checked = true;
         }
 
+        // --- ควบคุมการแสดงผล "ชนิดเซลล์ เพิ่มเติม 3" ---
         const wrapper3 = document.getElementById('wrapper-celltype3');
         if (selectedValue !== '' && selectedValue !== 'ไม่พบ') {
             wrapper3.style.display = 'block';
         } else {
             wrapper3.style.display = 'none';
             document.getElementById('cellType3Select').value = '';
-            handleCellType3Change();
+            handleCellType3Change(); // ล้างค่าตัวเลือกย่อยของเซลล์ 3 ทั้งหมด
         }
     }
 
@@ -978,6 +973,7 @@
         }
     }
 
+    // ปรับค่าเครื่องอัตโนมัติเป็น Negative ทั้งหมด
     function setAllAutoNegative() {
         document.querySelectorAll('.auto-select').forEach(select => {
             select.value = 'Negative';
@@ -1010,7 +1006,7 @@
                 
                 stopCameraScan();
                 
-                if(cleanText.length >= 9 && cleanText.length <= 20) {
+                if(cleanText.length === 13) {
                     setTimeout(() => { document.getElementById('nextBtn').click(); }, 400);
                 }
             },
@@ -1046,27 +1042,25 @@
 
     sampleIdInput.addEventListener('input', function() {
         this.value = this.value.replace(/[^0-9]/g, ''); 
-        const len = this.value.length;
-        if(len >= 9 && len <= 20) {
+        if(this.value.length === 13) {
             this.classList.replace('border-primary', 'border-success');
             this.classList.replace('border-danger', 'border-success');
-            document.getElementById('barcodeHelper').innerHTML = `<span class="text-success fw-bold">✅ ถูกต้อง (${len} หลัก)</span>`;
+            document.getElementById('barcodeHelper').innerHTML = '<span class="text-success fw-bold">✅ ครบ 13 หลัก</span>';
         } else {
             this.classList.replace('border-success', 'border-primary');
             this.classList.replace('border-danger', 'border-primary');
-            document.getElementById('barcodeHelper').innerHTML = `กดปุ่ม "เปิดกล้อง" หรือใช้เครื่องสแกน (ปัจจุบัน ${len} หลัก)`;
+            document.getElementById('barcodeHelper').innerHTML = 'กดปุ่ม "เปิดกล้อง" หรือใช้เครื่องสแกน';
         }
     });
 
     sampleIdInput.addEventListener('keydown', function(event) {
         if (event.key === 'Enter') {
             event.preventDefault(); 
-            const len = this.value.length;
-            if (len >= 9 && len <= 20) {
+            if (this.value.length === 13) {
                 document.getElementById('nextBtn').click(); 
             } else {
                 this.classList.replace('border-primary', 'border-danger');
-                document.getElementById('barcodeHelper').innerHTML = `<span class="text-danger fw-bold">❌ ต้องมี 9 - 20 หลัก (ปัจจุบัน ${len} หลัก)</span>`;
+                document.getElementById('barcodeHelper').innerHTML = '<span class="text-danger fw-bold">❌ ไม่ครบ 13 หลัก</span>';
                 this.style.animation = 'shake 0.5s';
                 setTimeout(() => { this.style.animation = ''; }, 500);
             }
@@ -1090,12 +1084,12 @@
             const result = await response.json();
             
             if(result.status === 'success') {
-                alertBox.innerHTML = `<div class="alert alert-success fw-bold text-center mt-3">✅ บันทึกหมายเลข ${dataObject['หมายเลขบนตัวอย่าง']} สำเร็จ!</div>`;
+                alertBox.innerHTML = `<div class="alert alert-success fw-bold text-center mt-3">✅ บันทึกหมายเลข ${dataObject['หมายเลขบนตัวอย่าง 13 หลัก']} สำเร็จ!</div>`;
                 
                 form.reset(); 
                 setInitialTimestamp();
                 clearBarcode();
-                handleCellType1Change();
+                handleCellType1Change(); // รีเซ็ตการแสดงผล Dynamic Box ทั้งหมด (รวม 2 และ 3)
                 
                 document.getElementsByClassName("step")[currentTab].classList.remove("active");
                 currentTab = 0; 
