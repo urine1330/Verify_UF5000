@@ -48,7 +48,7 @@
 
 <div class="container max-w-100" style="max-width: 850px;">
     <div class="form-container">
-        <h3 class="text-center mb-4 text-primary fw-bold">บันทึกผล Urinalysis_2026-08-10</h3>
+        <h3 class="text-center mb-4 text-primary fw-bold">บันทึกผล Urinalysis</h3>
         
         <!-- Progress Bar (4 Steps) -->
         <div class="step-indicator">
@@ -220,7 +220,7 @@
                         </select>
                     </div>
 
-                    <!-- ชนิดเซลล์ เพิ่มเติม 1 (อัปเดตเพิ่มตัวเลือก "ไม่พบ") -->
+                    <!-- ชนิดเซลล์ เพิ่มเติม 1 -->
                     <div class="col-md-6">
                         <label>ชนิดเซลล์ เพิ่มเติม 1</label>
                         <select class="form-select" name="ชนิดเซลล์ เพิ่มเติม 1">
@@ -288,10 +288,10 @@
                         </select>
                     </div>
 
-                    <!-- Squamous Epithelial Cell Auto -->
+                    <!-- Squamous Epithelial Cell Auto (ตรงกับหัวคอลัมน์แล้ว) -->
                     <div class="col-md-6">
-                        <label>Squamous epithelial cell ผลจากเครื่องอัตโนมัติ</label>
-                        <select class="form-select auto-select" name="Squamous epithelial cell ผลจากเครื่องอัตโนมัติ">
+                        <label>Squamous Epithelial Cell ผลจากเครื่องอัตโนมัติ</label>
+                        <select class="form-select auto-select" name="Squamous Epithelial Cell ผลจากเครื่องอัตโนมัติ">
                             <option value="" selected>-- เลือกค่า --</option>
                             <option value="Negative">Negative</option>
                             <option value="0-1">0-1</option>
@@ -305,10 +305,10 @@
                         </select>
                     </div>
 
-                    <!-- Mucous Thread Auto -->
+                    <!-- Mucous Thread Auto (ตรงกับหัวคอลัมน์และเว้นวรรคแล้ว) -->
                     <div class="col-md-6">
-                        <label>Mucous thread ผลจากเครื่องอัตโนมัติ</label>
-                        <select class="form-select auto-select" name="Mucous thread ผลจากเครื่องอัตโนมัติ">
+                        <label>Mucous Thread  ผลจากเครื่องอัตโนมัติ</label>
+                        <select class="form-select auto-select" name="Mucous Thread  ผลจากเครื่องอัตโนมัติ">
                             <option value="" selected>-- เลือกค่า --</option>
                             <option value="Negative">Negative</option>
                             <option value="Few">Few</option>
@@ -343,7 +343,7 @@
 </div>
 
 <script>
-    const GAS_URL = 'https://script.google.com/macros/s/AKfycbymiw0hym5BPBm5mfpMXo5_gXrLTf6Oykq9UAwmxAy4SwYM9yovZtsc-DBucxFs24F4Vw/exec';
+    const GAS_URL = 'ใส่_URL_ที่ได้จากการ_Deploy_Web_App_ตรงนี้';
 
     // ================= การจัดการ Multi-step =================
     let currentTab = 0; showTab(currentTab); 
@@ -416,7 +416,6 @@
         });
     }
 
-
     // ================= ระบบสแกน Barcode ผ่านกล้องมือถือ =================
     let html5QrCode;
     let isScanning = false;
@@ -467,7 +466,6 @@
             }).catch((err) => { console.log(err); });
         }
     }
-
 
     // ================= Input Validation =================
     const sampleIdInput = document.getElementById('sampleId');
