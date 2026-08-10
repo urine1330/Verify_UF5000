@@ -118,12 +118,12 @@
                 <div class="row g-3">
                     <div class="col-md-12">
                         <label class="fs-5 text-primary">
-                            หมายเลขบนตัวอย่าง (9 - 20 หลัก) <span class="text-danger">*</span>
+                            หมายเลขบนตัวอย่าง 13 หลัก (9 - 20 หลัก) <span class="text-danger">*</span>
                         </label>
                         
                         <div class="input-group input-group-lg mt-2">
                             <input type="text" class="form-control border-primary text-center fw-bold fs-3 tracking-widest" 
-                                   name="หมายเลขบนตัวอย่าง" id="sampleId" 
+                                   name="หมายเลขบนตัวอย่าง 13 หลัก" id="sampleId" 
                                    maxlength="20" placeholder="สแกน หรือ พิมพ์ตัวเลข 9-20 หลัก..." required>
                             
                             <button class="btn btn-primary" type="button" id="startCameraBtn" onclick="startCameraScan()">
@@ -1099,7 +1099,7 @@
             const result = await response.json();
             
             if(result.status === 'success') {
-                alertBox.innerHTML = `<div class="alert alert-success fw-bold text-center mt-3">✅ บันทึกหมายเลข ${dataObject['หมายเลขบนตัวอย่าง']} สำเร็จ!</div>`;
+                alertBox.innerHTML = `<div class="alert alert-success fw-bold text-center mt-3">✅ บันทึกหมายเลข ${dataObject['หมายเลขบนตัวอย่าง 13 หลัก']} สำเร็จ!</div>`;
                 
                 form.reset(); 
                 setInitialTimestamp();
