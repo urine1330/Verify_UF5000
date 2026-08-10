@@ -39,7 +39,7 @@
         .step-dot.active { background-color: #0d6efd; color: white; box-shadow: 0 0 0 5px rgba(13, 110, 253, 0.2); }
         .step-dot.completed { background-color: #198754; color: white; }
         label { font-weight: 600; color: #495057; margin-top: 10px; margin-bottom: 5px; font-size: 0.88rem; }
-        .tracking-widest { letter-spacing: 0.25em; }
+        .tracking-widest { letter-spacing: 0.15em; }
         
         .conditional-box {
             background-color: #f8f9fa; border-left: 4px solid #0d6efd; padding: 15px; border-radius: 6px; margin-top: 10px; display: none;
@@ -118,13 +118,13 @@
                 <div class="row g-3">
                     <div class="col-md-12">
                         <label class="fs-5 text-primary">
-                            หมายเลขบนตัวอย่าง 13 หลัก <span class="text-danger">*</span>
+                            หมายเลขบนตัวอย่าง (9-20 หลัก) <span class="text-danger">*</span>
                         </label>
                         
                         <div class="input-group input-group-lg mt-2">
                             <input type="text" class="form-control border-primary text-center fw-bold fs-3 tracking-widest" 
                                    name="หมายเลขบนตัวอย่าง 13 หลัก" id="sampleId" 
-                                   maxlength="13" placeholder="สแกน หรือ พิมพ์ตัวเลข..." required>
+                                   minlength="9" maxlength="20" placeholder="สแกน หรือ พิมพ์ตัวเลข (9-20 หลัก)..." required>
                             
                             <button class="btn btn-primary" type="button" id="startCameraBtn" onclick="startCameraScan()">
                                 <i class="fa-solid fa-camera"></i> เปิดกล้อง
@@ -138,7 +138,7 @@
                         <div id="reader"></div>
 
                         <div id="barcodeHelper" class="form-text text-center text-muted mt-2">
-                            กดปุ่ม "เปิดกล้อง" เพื่อสแกน หรือใช้เครื่องสแกนบาร์โค้ดยิงที่ช่องนี้
+                            กดปุ่ม "เปิดกล้อง" เพื่อสแกน หรือใช้เครื่องสแกนบาร์โค้ดยิงที่ช่องนี้ (9-20 หลัก)
                         </div>
                     </div>
                 </div>
@@ -862,8 +862,8 @@
         }
         if (currentTab === 1 && valid) {
             let sampleId = document.getElementById("sampleId").value;
-            if(sampleId.length !== 13) {
-                document.getElementById('barcodeHelper').innerHTML = '<span class="text-danger fw-bold">❌ กรุณากรอกหมายเลขให้ครบ 13 หลัก</span>';
+            if(sampleId.length < 9 || sampleId.length > 20) {
+                document.getElementById('barcodeHelper').innerHTML = '<span class="text-danger fw-bold">❌ กรุณากรอกหมายเลขให้ครบ 9-20 หลัก</span>';
                 document.getElementById("sampleId").focus();
                 return false;
             }
@@ -1006,7 +1006,7 @@
                 
                 stopCameraScan();
                 
-                if(cleanText.length === 13) {
+                if(cleanText.length >= 9 && cleanText.length <= 20) {
                     setTimeout(() => { document.getElementById('nextBtn').click(); }, 400);
                 }
             },
@@ -1042,25 +1042,25 @@
 
     sampleIdInput.addEventListener('input', function() {
         this.value = this.value.replace(/[^0-9]/g, ''); 
-        if(this.value.length === 13) {
+        if(this.value.length >= 9 && this.value.length <= 20) {
             this.classList.replace('border-primary', 'border-success');
             this.classList.replace('border-danger', 'border-success');
-            document.getElementById('barcodeHelper').innerHTML = '<span class="text-success fw-bold">✅ ครบ 13 หลัก</span>';
+            document.getElementById('barcodeHelper').innerHTML = `<span class="text-success fw-bold">✅ ความยาวถูกต้อง (${this.value.length} หลัก)</span>`;
         } else {
             this.classList.replace('border-success', 'border-primary');
             this.classList.replace('border-danger', 'border-primary');
-            document.getElementById('barcodeHelper').innerHTML = 'กดปุ่ม "เปิดกล้อง" หรือใช้เครื่องสแกน';
+            document.getElementById('barcodeHelper').innerHTML = 'กดปุ่ม "เปิดกล้อง" หรือใช้เครื่องสแกน (9-20 หลัก)';
         }
     });
 
     sampleIdInput.addEventListener('keydown', function(event) {
         if (event.key === 'Enter') {
             event.preventDefault(); 
-            if (this.value.length === 13) {
+            if (this.value.length >= 9 && this.value.length <= 20) {
                 document.getElementById('nextBtn').click(); 
             } else {
                 this.classList.replace('border-primary', 'border-danger');
-                document.getElementById('barcodeHelper').innerHTML = '<span class="text-danger fw-bold">❌ ไม่ครบ 13 หลัก</span>';
+                document.getElementById('barcodeHelper').innerHTML = '<span class="text-danger fw-bold">❌ จำนวนหลักไม่ถูกต้อง (ต้องเป็น 9-20 หลัก)</span>';
                 this.style.animation = 'shake 0.5s';
                 setTimeout(() => { this.style.animation = ''; }, 500);
             }
@@ -1077,14 +1077,30 @@
         nextBtn.innerHTML = '<span class="spinner-border spinner-border-sm"></span> กำลังบันทึก...';
         
         const formData = new FormData(form);
-        const dataObject = Object.fromEntries(formData.entries());
+        const dataObject = {};
+
+        // รายการผลลัพธ์ที่ต้องการเติม ' นำหน้า
+        const targetValuesWithQuote = [
+            '0-1', '1-2', '2-3', '3-5', '5-10', 
+            '10-15', '15-20', '>20', '>50', '>100'
+        ];
+
+        // เติม ' นำหน้าเฉพาะค่าที่ตรงกับรายการที่ระบุ
+        for (let [key, value] of formData.entries()) {
+            if (targetValuesWithQuote.includes(value.trim())) {
+                dataObject[key] = "'" + value;
+            } else {
+                dataObject[key] = value;
+            }
+        }
 
         try {
             const response = await fetch(GAS_URL, { method: 'POST', body: JSON.stringify(dataObject) });
             const result = await response.json();
             
             if(result.status === 'success') {
-                alertBox.innerHTML = `<div class="alert alert-success fw-bold text-center mt-3">✅ บันทึกหมายเลข ${dataObject['หมายเลขบนตัวอย่าง 13 หลัก']} สำเร็จ!</div>`;
+                const sampleVal = dataObject['หมายเลขบนตัวอย่าง 13 หลัก'] || '';
+                alertBox.innerHTML = `<div class="alert alert-success fw-bold text-center mt-3">✅ บันทึกหมายเลข ${sampleVal} สำเร็จ!</div>`;
                 
                 form.reset(); 
                 setInitialTimestamp();
