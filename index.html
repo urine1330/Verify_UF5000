@@ -385,161 +385,164 @@
                         </div>
                     </div>
 
-                    <div class="col-12"><hr class="my-2 text-muted"></div>
-
-                    <!-- ================= ชนิดเซลล์ เพิ่มเติม 2 ================= -->
-                    <div class="col-md-6">
-                        <label class="text-info fw-bold">ชนิดเซลล์ เพิ่มเติม 2</label>
-                        <select class="form-select border-info" name="ชนิดเซลล์ เพิ่มเติม 2" id="cellType2Select" onchange="handleCellType2Change()">
-                            <option value="" selected>-- เลือกประเภท --</option>
-                            <option value="ไม่พบ">ไม่พบ</option>
-                            <option value="Epithelial">Epithelial</option>
-                            <option value="Cast">Cast</option>
-                            <option value="Crystal">Crystal</option>
-                            <option value="Yeast">Yeast</option>
-                            <option value="Sperm">Sperm</option>
-                            <option value="Dysmorphic red blood cell">Dysmorphic red blood cell</option>
-                        </select>
-                    </div>
-
-                    <div class="col-12">
-                        <!-- Epithelial 2 -->
-                        <div id="box-epithelial-2" class="conditional-box-2">
-                            <div class="row g-3">
-                                <div class="col-md-6">
-                                    <label>ชนิด Epithelial เพิ่มเติม 2</label>
-                                    <select class="form-select" name="ชนิด Epithelial เพิ่มเติม 2">
-                                        <option value="" selected>-- เลือกชนิด Epithelial --</option>
-                                        <option value="Bladder Epithelial">Bladder Epithelial</option>
-                                        <option value="Renal Epithelial">Renal Epithelial</option>
-                                        <option value="Caudate Epithelial">Caudate Epithelial</option>
-                                    </select>
-                                </div>
-                                <div class="col-md-6">
-                                    <label>Epithelial Cell เพิ่มเติม 2 ผลจากกล้องจุลทรรศน์ [/HPF]</label>
-                                    <select class="form-select" name="Epithelial Cell เพิ่มเติม 2 ผลจากกล้องจุลทรรศน์ [/HPF]">
-                                        <option value="" selected>-- เลือกค่า --</option>
-                                        <option value="Negative">Negative</option>
-                                        <option value="0-1">0-1</option>
-                                        <option value="1-2">1-2</option>
-                                        <option value="2-3">2-3</option>
-                                        <option value="3-5">3-5</option>
-                                        <option value="5-10">5-10</option>
-                                        <option value="10-15">10-15</option>
-                                        <option value="15-20">15-20</option>
-                                        <option value=">20">&gt;20</option>
-                                    </select>
-                                </div>
+                    <!-- ================= Wrapper ชนิดเซลล์ เพิ่มเติม 2 (แสดงผลเฉพาะเมื่อ เพิ่มเติม 1 ไม่ใช่ "ไม่พบ") ================= -->
+                    <div id="wrapper-celltype2" class="col-12" style="display: none;">
+                        <hr class="my-2 text-muted">
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label class="text-info fw-bold">ชนิดเซลล์ เพิ่มเติม 2</label>
+                                <select class="form-select border-info" name="ชนิดเซลล์ เพิ่มเติม 2" id="cellType2Select" onchange="handleCellType2Change()">
+                                    <option value="" selected>-- เลือกประเภท --</option>
+                                    <option value="ไม่พบ">ไม่พบ</option>
+                                    <option value="Epithelial">Epithelial</option>
+                                    <option value="Cast">Cast</option>
+                                    <option value="Crystal">Crystal</option>
+                                    <option value="Yeast">Yeast</option>
+                                    <option value="Sperm">Sperm</option>
+                                    <option value="Dysmorphic red blood cell">Dysmorphic red blood cell</option>
+                                </select>
                             </div>
-                        </div>
 
-                        <!-- Cast 2 -->
-                        <div id="box-cast-2" class="conditional-box-2">
-                            <div class="row g-3">
-                                <div class="col-md-6">
-                                    <label>ชนิด Cast เพิ่มเติม 2</label>
-                                    <select class="form-select" name="ชนิด Cast เพิ่มเติม 2">
-                                        <option value="" selected>-- เลือกชนิด Cast --</option>
-                                        <option value="Hyaline cast">Hyaline cast</option>
-                                        <option value="Granular cast">Granular cast</option>
-                                    </select>
+                            <div class="col-12">
+                                <!-- Epithelial 2 -->
+                                <div id="box-epithelial-2" class="conditional-box-2">
+                                    <div class="row g-3">
+                                        <div class="col-md-6">
+                                            <label>ชนิด Epithelial เพิ่มเติม 2</label>
+                                            <select class="form-select" name="ชนิด Epithelial เพิ่มเติม 2">
+                                                <option value="" selected>-- เลือกชนิด Epithelial --</option>
+                                                <option value="Bladder Epithelial">Bladder Epithelial</option>
+                                                <option value="Renal Epithelial">Renal Epithelial</option>
+                                                <option value="Caudate Epithelial">Caudate Epithelial</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label>Epithelial Cell เพิ่มเติม 2 ผลจากกล้องจุลทรรศน์ [/HPF]</label>
+                                            <select class="form-select" name="Epithelial Cell เพิ่มเติม 2 ผลจากกล้องจุลทรรศน์ [/HPF]">
+                                                <option value="" selected>-- เลือกค่า --</option>
+                                                <option value="Negative">Negative</option>
+                                                <option value="0-1">0-1</option>
+                                                <option value="1-2">1-2</option>
+                                                <option value="2-3">2-3</option>
+                                                <option value="3-5">3-5</option>
+                                                <option value="5-10">5-10</option>
+                                                <option value="10-15">10-15</option>
+                                                <option value="15-20">15-20</option>
+                                                <option value=">20">&gt;20</option>
+                                            </select>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="col-md-6">
-                                    <label>Cast  เพิ่มเติม 2 ผลจากกล้องจุลทรรศน์ [/LPF]</label>
-                                    <select class="form-select" name="Cast  เพิ่มเติม 2 ผลจากกล้องจุลทรรศน์ [/LPF]">
-                                        <option value="" selected>-- เลือกค่า --</option>
-                                        <option value="Negative">Negative</option>
-                                        <option value="0-1">0-1</option>
-                                        <option value="1-2">1-2</option>
-                                        <option value="2-3">2-3</option>
-                                        <option value="3-5">3-5</option>
-                                        <option value="5-10">5-10</option>
-                                        <option value="10-15">10-15</option>
-                                        <option value="15-20">15-20</option>
-                                        <option value=">20">&gt;20</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
 
-                        <!-- Crystal 2 -->
-                        <div id="box-crystal-2" class="conditional-box-2">
-                            <div class="row g-3">
-                                <div class="col-md-6">
-                                    <label>ชนิด Crystal เพิ่มเติม 2</label>
-                                    <select class="form-select" name="ชนิด Crystal เพิ่มเติม 2">
-                                        <option value="" selected>-- เลือกชนิด Crystal --</option>
-                                        <option value="Calcium Oxalate crystal">Calcium Oxalate crystal</option>
-                                        <option value="Uric acid crystal">Uric acid crystal</option>
-                                        <option value="Triple phosphate crystal">Triple phosphate crystal</option>
-                                    </select>
+                                <!-- Cast 2 -->
+                                <div id="box-cast-2" class="conditional-box-2">
+                                    <div class="row g-3">
+                                        <div class="col-md-6">
+                                            <label>ชนิด Cast เพิ่มเติม 2</label>
+                                            <select class="form-select" name="ชนิด Cast เพิ่มเติม 2">
+                                                <option value="" selected>-- เลือกชนิด Cast --</option>
+                                                <option value="Hyaline cast">Hyaline cast</option>
+                                                <option value="Granular cast">Granular cast</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label>Cast  เพิ่มเติม 2 ผลจากกล้องจุลทรรศน์ [/LPF]</label>
+                                            <select class="form-select" name="Cast  เพิ่มเติม 2 ผลจากกล้องจุลทรรศน์ [/LPF]">
+                                                <option value="" selected>-- เลือกค่า --</option>
+                                                <option value="Negative">Negative</option>
+                                                <option value="0-1">0-1</option>
+                                                <option value="1-2">1-2</option>
+                                                <option value="2-3">2-3</option>
+                                                <option value="3-5">3-5</option>
+                                                <option value="5-10">5-10</option>
+                                                <option value="10-15">10-15</option>
+                                                <option value="15-20">15-20</option>
+                                                <option value=">20">&gt;20</option>
+                                            </select>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="col-md-6">
-                                    <label>Crystal เพิ่มเติม 2 ผลจากกล้องจุลทรรศน์ [/HPF]</label>
-                                    <select class="form-select" name="Crystal เพิ่มเติม 2 ผลจากกล้องจุลทรรศน์ [/HPF]">
-                                        <option value="" selected>-- เลือกค่า --</option>
-                                        <option value="Negative">Negative</option>
-                                        <option value="Few">Few</option>
-                                        <option value="Moderate">Moderate</option>
-                                        <option value="Numerous">Numerous</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
 
-                        <!-- Yeast 2 -->
-                        <div id="box-yeast-2" class="conditional-box-2">
-                            <div class="row g-3">
-                                <div class="col-md-6">
-                                    <label>ชนิด Yeast เพิ่มเติม 2</label>
-                                    <select class="form-select" name="Yeast เพิ่มเติม 2">
-                                        <option value="" selected>-- เลือกชนิด Yeast --</option>
-                                        <option value="Budding yeast">Budding yeast</option>
-                                    </select>
+                                <!-- Crystal 2 -->
+                                <div id="box-crystal-2" class="conditional-box-2">
+                                    <div class="row g-3">
+                                        <div class="col-md-6">
+                                            <label>ชนิด Crystal เพิ่มเติม 2</label>
+                                            <select class="form-select" name="ชนิด Crystal เพิ่มเติม 2">
+                                                <option value="" selected>-- เลือกชนิด Crystal --</option>
+                                                <option value="Calcium Oxalate crystal">Calcium Oxalate crystal</option>
+                                                <option value="Uric acid crystal">Uric acid crystal</option>
+                                                <option value="Triple phosphate crystal">Triple phosphate crystal</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label>Crystal เพิ่มเติม 2 ผลจากกล้องจุลทรรศน์ [/HPF]</label>
+                                            <select class="form-select" name="Crystal เพิ่มเติม 2 ผลจากกล้องจุลทรรศน์ [/HPF]">
+                                                <option value="" selected>-- เลือกค่า --</option>
+                                                <option value="Negative">Negative</option>
+                                                <option value="Few">Few</option>
+                                                <option value="Moderate">Moderate</option>
+                                                <option value="Numerous">Numerous</option>
+                                            </select>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="col-md-6">
-                                    <label>Yeast เพิ่มเติม 2 ผลจากกล้องจุลทรรศน์ [/HPF]</label>
-                                    <select class="form-select" name="Yeast เพิ่มเติม 2 ผลจากกล้องจุลทรรศน์ [/HPF]">
-                                        <option value="" selected>-- เลือกค่า --</option>
-                                        <option value="Negative">Negative</option>
-                                        <option value="Few">Few</option>
-                                        <option value="Moderate">Moderate</option>
-                                        <option value="Numerous">Numerous</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
 
-                        <!-- Sperm 2 -->
-                        <div id="box-sperm-2" class="conditional-box-2">
-                            <div class="row g-3">
-                                <div class="col-md-6">
-                                    <label>ชนิด Sperm เพิ่มเติม 2</label>
-                                    <select class="form-select" name="Sperm เพิ่มเติม 2">
-                                        <option value="" selected>-- เลือกชนิด Sperm --</option>
-                                        <option value="Spermatozoa">Spermatozoa</option>
-                                    </select>
+                                <!-- Yeast 2 -->
+                                <div id="box-yeast-2" class="conditional-box-2">
+                                    <div class="row g-3">
+                                        <div class="col-md-6">
+                                            <label>ชนิด Yeast เพิ่มเติม 2</label>
+                                            <select class="form-select" name="Yeast เพิ่มเติม 2">
+                                                <option value="" selected>-- เลือกชนิด Yeast --</option>
+                                                <option value="Budding yeast">Budding yeast</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label>Yeast เพิ่มเติม 2 ผลจากกล้องจุลทรรศน์ [/HPF]</label>
+                                            <select class="form-select" name="Yeast เพิ่มเติม 2 ผลจากกล้องจุลทรรศน์ [/HPF]">
+                                                <option value="" selected>-- เลือกค่า --</option>
+                                                <option value="Negative">Negative</option>
+                                                <option value="Few">Few</option>
+                                                <option value="Moderate">Moderate</option>
+                                                <option value="Numerous">Numerous</option>
+                                            </select>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="col-md-6">
-                                    <label>Sperm เพิ่มเติม 2 ผลจากกล้องจุลทรรศน์ [/HPF]</label>
-                                    <select class="form-select" name="Sperm เพิ่มเติม 2 ผลจากกล้องจุลทรรศน์ [/HPF]">
-                                        <option value="" selected>-- เลือกค่า --</option>
-                                        <option value="Negative">Negative</option>
-                                        <option value="Few">Few</option>
-                                        <option value="Moderate">Moderate</option>
-                                        <option value="Numerous">Numerous</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
 
-                        <!-- Dysmorphic 2 -->
-                        <div id="box-dysmorphic-2" class="conditional-box-2">
-                            <div class="form-check mt-2">
-                                <input class="form-check-input" type="checkbox" name="Dysmorphic red blood cell" value="พบ" id="dysmorphicCheck2">
-                                <label class="form-check-label fw-bold text-dark" for="dysmorphicCheck2">
-                                    พบ Dysmorphic red blood cell
-                                </label>
+                                <!-- Sperm 2 -->
+                                <div id="box-sperm-2" class="conditional-box-2">
+                                    <div class="row g-3">
+                                        <div class="col-md-6">
+                                            <label>ชนิด Sperm เพิ่มเติม 2</label>
+                                            <select class="form-select" name="Sperm เพิ่มเติม 2">
+                                                <option value="" selected>-- เลือกชนิด Sperm --</option>
+                                                <option value="Spermatozoa">Spermatozoa</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label>Sperm เพิ่มเติม 2 ผลจากกล้องจุลทรรศน์ [/HPF]</label>
+                                            <select class="form-select" name="Sperm เพิ่มเติม 2 ผลจากกล้องจุลทรรศน์ [/HPF]">
+                                                <option value="" selected>-- เลือกค่า --</option>
+                                                <option value="Negative">Negative</option>
+                                                <option value="Few">Few</option>
+                                                <option value="Moderate">Moderate</option>
+                                                <option value="Numerous">Numerous</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Dysmorphic 2 -->
+                                <div id="box-dysmorphic-2" class="conditional-box-2">
+                                    <div class="form-check mt-2">
+                                        <input class="form-check-input" type="checkbox" name="Dysmorphic red blood cell" value="พบ" id="dysmorphicCheck2">
+                                        <label class="form-check-label fw-bold text-dark" for="dysmorphicCheck2">
+                                            พบ Dysmorphic red blood cell
+                                        </label>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -738,6 +741,16 @@
             document.getElementById('box-dysmorphic-1').style.display = 'block';
             document.getElementById('dysmorphicCheck1').checked = true;
         }
+
+        // --- ควบคุมการแสดงผล "ชนิดเซลล์ เพิ่มเติม 2" ---
+        const wrapper2 = document.getElementById('wrapper-celltype2');
+        if (selectedValue !== '' && selectedValue !== 'ไม่พบ') {
+            wrapper2.style.display = 'block';
+        } else {
+            wrapper2.style.display = 'none';
+            document.getElementById('cellType2Select').value = '';
+            handleCellType2Change(); // ล้างค่าตัวเลือกย่อยของเซลล์ 2 ทั้งหมด
+        }
     }
 
     // ================= Dynamic fields: ชนิดเซลล์ เพิ่มเติม 2 =================
@@ -878,8 +891,7 @@
                 form.reset(); 
                 setInitialTimestamp();
                 clearBarcode();
-                handleCellType1Change(); // รีเซ็ต dynamic box 1
-                handleCellType2Change(); // รีเซ็ต dynamic box 2
+                handleCellType1Change(); // รีเซ็ตการแสดงผล Dynamic Box ทั้งหมด
                 
                 document.getElementsByClassName("step")[currentTab].classList.remove("active");
                 currentTab = 0; 
