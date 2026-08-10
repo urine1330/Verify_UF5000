@@ -39,12 +39,16 @@
         .step-dot.active { background-color: #0d6efd; color: white; box-shadow: 0 0 0 5px rgba(13, 110, 253, 0.2); }
         .step-dot.completed { background-color: #198754; color: white; }
         label { font-weight: 600; color: #495057; margin-top: 10px; margin-bottom: 5px; font-size: 0.88rem; }
-        .tracking-widest { letter-spacing: 0.25em; }
+        .tracking-widest { letter-spacing: 0.15em; }
+        
         .conditional-box {
             background-color: #f8f9fa; border-left: 4px solid #0d6efd; padding: 15px; border-radius: 6px; margin-top: 10px; display: none;
         }
         .conditional-box-2 {
             background-color: #f4f6f9; border-left: 4px solid #17a2b8; padding: 15px; border-radius: 6px; margin-top: 10px; display: none;
+        }
+        .conditional-box-3 {
+            background-color: #fff9e6; border-left: 4px solid #ffc107; padding: 15px; border-radius: 6px; margin-top: 10px; display: none;
         }
         
         #reader { width: 100%; max-width: 500px; margin: 15px auto; display: none; border-radius: 10px; overflow: hidden; border: 2px solid #0d6efd;}
@@ -74,7 +78,7 @@
                 <div class="row g-3">
                     <div class="col-md-6">
                         <label>ประทับเวลา (Timestamp)</label>
-                        <input type="datetime-local" class="form-control bg-light" name="ประทับเวลา" id="timestampInput" required readonly>
+                        <input type="text" class="form-control bg-light" name="ประทับเวลา" id="timestampInput" required readonly>
                     </div>
 
                     <div class="col-md-6">
@@ -114,13 +118,13 @@
                 <div class="row g-3">
                     <div class="col-md-12">
                         <label class="fs-5 text-primary">
-                            หมายเลขบนตัวอย่าง 13 หลัก <span class="text-danger">*</span>
+                            หมายเลขบนตัวอย่าง (9 - 20 หลัก) <span class="text-danger">*</span>
                         </label>
                         
                         <div class="input-group input-group-lg mt-2">
                             <input type="text" class="form-control border-primary text-center fw-bold fs-3 tracking-widest" 
-                                   name="หมายเลขบนตัวอย่าง 13 หลัก" id="sampleId" 
-                                   maxlength="13" placeholder="สแกน หรือ พิมพ์ตัวเลข..." required>
+                                   name="หมายเลขบนตัวอย่าง" id="sampleId" 
+                                   maxlength="20" placeholder="สแกน หรือ พิมพ์ตัวเลข 9-20 หลัก..." required>
                             
                             <button class="btn btn-primary" type="button" id="startCameraBtn" onclick="startCameraScan()">
                                 <i class="fa-solid fa-camera"></i> เปิดกล้อง
@@ -134,7 +138,7 @@
                         <div id="reader"></div>
 
                         <div id="barcodeHelper" class="form-text text-center text-muted mt-2">
-                            กดปุ่ม "เปิดกล้อง" เพื่อสแกน หรือใช้เครื่องสแกนบาร์โค้ดยิงที่ช่องนี้
+                            กดปุ่ม "เปิดกล้อง" เพื่อสแกน หรือใช้เครื่องสแกนบาร์โค้ดยิงที่ช่องนี้ (9-20 หลัก)
                         </div>
                     </div>
                 </div>
@@ -385,7 +389,7 @@
                         </div>
                     </div>
 
-                    <!-- ================= Wrapper ชนิดเซลล์ เพิ่มเติม 2 (แสดงผลเฉพาะเมื่อ เพิ่มเติม 1 ไม่ใช่ "ไม่พบ") ================= -->
+                    <!-- ================= Wrapper ชนิดเซลล์ เพิ่มเติม 2 ================= -->
                     <div id="wrapper-celltype2" class="col-12" style="display: none;">
                         <hr class="my-2 text-muted">
                         <div class="row g-3">
@@ -547,6 +551,168 @@
                         </div>
                     </div>
 
+                    <!-- ================= Wrapper ชนิดเซลล์ เพิ่มเติม 3 ================= -->
+                    <div id="wrapper-celltype3" class="col-12" style="display: none;">
+                        <hr class="my-2 text-muted">
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label class="text-warning fw-bold text-dark">ชนิดเซลล์ เพิ่มเติม 3</label>
+                                <select class="form-select border-warning" name="ชนิดเซลล์ เพิ่มเติม 3" id="cellType3Select" onchange="handleCellType3Change()">
+                                    <option value="" selected>-- เลือกประเภท --</option>
+                                    <option value="ไม่พบ">ไม่พบ</option>
+                                    <option value="Epithelial">Epithelial</option>
+                                    <option value="Cast">Cast</option>
+                                    <option value="Crystal">Crystal</option>
+                                    <option value="Yeast">Yeast</option>
+                                    <option value="Sperm">Sperm</option>
+                                    <option value="Dysmorphic red blood cell">Dysmorphic red blood cell</option>
+                                </select>
+                            </div>
+
+                            <div class="col-12">
+                                <!-- Epithelial 3 -->
+                                <div id="box-epithelial-3" class="conditional-box-3">
+                                    <div class="row g-3">
+                                        <div class="col-md-6">
+                                            <label>ชนิด Epithelial เพิ่มเติม 3</label>
+                                            <select class="form-select" name="ชนิด Epithelial เพิ่มเติม 3">
+                                                <option value="" selected>-- เลือกชนิด Epithelial --</option>
+                                                <option value="Bladder Epithelial">Bladder Epithelial</option>
+                                                <option value="Renal Epithelial">Renal Epithelial</option>
+                                                <option value="Caudate Epithelial">Caudate Epithelial</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label>Epithelial Cell เพิ่มเติม 3 ผลจากกล้องจุลทรรศน์ [/HPF]</label>
+                                            <select class="form-select" name="Epithelial Cell เพิ่มเติม 3 ผลจากกล้องจุลทรรศน์ [/HPF]">
+                                                <option value="" selected>-- เลือกค่า --</option>
+                                                <option value="Negative">Negative</option>
+                                                <option value="0-1">0-1</option>
+                                                <option value="1-2">1-2</option>
+                                                <option value="2-3">2-3</option>
+                                                <option value="3-5">3-5</option>
+                                                <option value="5-10">5-10</option>
+                                                <option value="10-15">10-15</option>
+                                                <option value="15-20">15-20</option>
+                                                <option value=">20">&gt;20</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Cast 3 -->
+                                <div id="box-cast-3" class="conditional-box-3">
+                                    <div class="row g-3">
+                                        <div class="col-md-6">
+                                            <label>ชนิด Cast เพิ่มเติม 3</label>
+                                            <select class="form-select" name="ชนิด Cast เพิ่มเติม 3">
+                                                <option value="" selected>-- เลือกชนิด Cast --</option>
+                                                <option value="Hyaline cast">Hyaline cast</option>
+                                                <option value="Granular cast">Granular cast</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label>Cast  เพิ่มเติม 3 ผลจากกล้องจุลทรรศน์ [/LPF]</label>
+                                            <select class="form-select" name="Cast  เพิ่มเติม 3 ผลจากกล้องจุลทรรศน์ [/LPF]">
+                                                <option value="" selected>-- เลือกค่า --</option>
+                                                <option value="Negative">Negative</option>
+                                                <option value="0-1">0-1</option>
+                                                <option value="1-2">1-2</option>
+                                                <option value="2-3">2-3</option>
+                                                <option value="3-5">3-5</option>
+                                                <option value="5-10">5-10</option>
+                                                <option value="10-15">10-15</option>
+                                                <option value="15-20">15-20</option>
+                                                <option value=">20">&gt;20</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Crystal 3 -->
+                                <div id="box-crystal-3" class="conditional-box-3">
+                                    <div class="row g-3">
+                                        <div class="col-md-6">
+                                            <label>ชนิด Crystal เพิ่มเติม 3</label>
+                                            <select class="form-select" name="ชนิด Crystal เพิ่มเติม 3">
+                                                <option value="" selected>-- เลือกชนิด Crystal --</option>
+                                                <option value="Calcium Oxalate crystal">Calcium Oxalate crystal</option>
+                                                <option value="Uric acid crystal">Uric acid crystal</option>
+                                                <option value="Triple phosphate crystal">Triple phosphate crystal</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label>Crystal เพิ่มเติม 3 ผลจากกล้องจุลทรรศน์ [/HPF]</label>
+                                            <select class="form-select" name="Crystal เพิ่มเติม 3 ผลจากกล้องจุลทรรศน์ [/HPF]">
+                                                <option value="" selected>-- เลือกค่า --</option>
+                                                <option value="Negative">Negative</option>
+                                                <option value="Few">Few</option>
+                                                <option value="Moderate">Moderate</option>
+                                                <option value="Numerous">Numerous</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Yeast 3 -->
+                                <div id="box-yeast-3" class="conditional-box-3">
+                                    <div class="row g-3">
+                                        <div class="col-md-6">
+                                            <label>ชนิด Yeast เพิ่มเติม 3</label>
+                                            <select class="form-select" name="Yeast เพิ่มเติม 3">
+                                                <option value="" selected>-- เลือกชนิด Yeast --</option>
+                                                <option value="Budding yeast">Budding yeast</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label>Yeast เพิ่มเติม 3 ผลจากกล้องจุลทรรศน์ [/HPF]</label>
+                                            <select class="form-select" name="Yeast เพิ่มเติม 3 ผลจากกล้องจุลทรรศน์ [/HPF]">
+                                                <option value="" selected>-- เลือกค่า --</option>
+                                                <option value="Negative">Negative</option>
+                                                <option value="Few">Few</option>
+                                                <option value="Moderate">Moderate</option>
+                                                <option value="Numerous">Numerous</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Sperm 3 -->
+                                <div id="box-sperm-3" class="conditional-box-3">
+                                    <div class="row g-3">
+                                        <div class="col-md-6">
+                                            <label>ชนิด Sperm เพิ่มเติม 3</label>
+                                            <select class="form-select" name="Sperm เพิ่มเติม 3">
+                                                <option value="" selected>-- เลือกชนิด Sperm --</option>
+                                                <option value="Spermatozoa">Spermatozoa</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label>Sperm เพิ่มเติม 3 ผลจากกล้องจุลทรรศน์ [/HPF]</label>
+                                            <select class="form-select" name="Sperm เพิ่มเติม 3 ผลจากกล้องจุลทรรศน์ [/HPF]">
+                                                <option value="" selected>-- เลือกค่า --</option>
+                                                <option value="Negative">Negative</option>
+                                                <option value="Few">Few</option>
+                                                <option value="Moderate">Moderate</option>
+                                                <option value="Numerous">Numerous</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Dysmorphic 3 -->
+                                <div id="box-dysmorphic-3" class="conditional-box-3">
+                                    <div class="form-check mt-2">
+                                        <input class="form-check-input" type="checkbox" name="Dysmorphic red blood cell" value="พบ" id="dysmorphicCheck3">
+                                        <label class="form-check-label fw-bold text-dark" for="dysmorphicCheck3">
+                                            พบ Dysmorphic red blood cell
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
             </div>
 
@@ -696,8 +862,8 @@
         }
         if (currentTab === 1 && valid) {
             let sampleId = document.getElementById("sampleId").value;
-            if(sampleId.length !== 13) {
-                document.getElementById('barcodeHelper').innerHTML = '<span class="text-danger fw-bold">❌ กรุณากรอกหมายเลขให้ครบ 13 หลัก</span>';
+            if(sampleId.length < 9 || sampleId.length > 20) {
+                document.getElementById('barcodeHelper').innerHTML = '<span class="text-danger fw-bold">❌ กรุณากรอกหมายเลข 9 - 20 หลัก</span>';
                 document.getElementById("sampleId").focus();
                 return false;
             }
@@ -714,10 +880,17 @@
         dots[n].className += " active";
     }
 
-    // Auto Timestamp
+    // Auto Timestamp Format: DD/MM/YYYY, HH:mm:ss
     function setInitialTimestamp() {
-        const now = new Date(); now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
-        document.getElementById('timestampInput').value = now.toISOString().slice(0, 16);
+        const now = new Date();
+        const day = String(now.getDate()).padStart(2, '0');
+        const month = String(now.getMonth() + 1).padStart(2, '0');
+        const year = now.getFullYear();
+        const hours = String(now.getHours()).padStart(2, '0');
+        const minutes = String(now.getMinutes()).padStart(2, '0');
+        const seconds = String(now.getSeconds()).padStart(2, '0');
+        
+        document.getElementById('timestampInput').value = `${day}/${month}/${year}, ${hours}:${minutes}:${seconds}`;
     }
     setInitialTimestamp();
 
@@ -742,14 +915,13 @@
             document.getElementById('dysmorphicCheck1').checked = true;
         }
 
-        // --- ควบคุมการแสดงผล "ชนิดเซลล์ เพิ่มเติม 2" ---
         const wrapper2 = document.getElementById('wrapper-celltype2');
         if (selectedValue !== '' && selectedValue !== 'ไม่พบ') {
             wrapper2.style.display = 'block';
         } else {
             wrapper2.style.display = 'none';
             document.getElementById('cellType2Select').value = '';
-            handleCellType2Change(); // ล้างค่าตัวเลือกย่อยของเซลล์ 2 ทั้งหมด
+            handleCellType2Change();
         }
     }
 
@@ -773,9 +945,39 @@
             document.getElementById('box-dysmorphic-2').style.display = 'block';
             document.getElementById('dysmorphicCheck2').checked = true;
         }
+
+        const wrapper3 = document.getElementById('wrapper-celltype3');
+        if (selectedValue !== '' && selectedValue !== 'ไม่พบ') {
+            wrapper3.style.display = 'block';
+        } else {
+            wrapper3.style.display = 'none';
+            document.getElementById('cellType3Select').value = '';
+            handleCellType3Change();
+        }
     }
 
-    // ปรับค่าเครื่องอัตโนมัติเป็น Negative ทั้งหมด
+    // ================= Dynamic fields: ชนิดเซลล์ เพิ่มเติม 3 =================
+    function handleCellType3Change() {
+        const selectedValue = document.getElementById('cellType3Select').value;
+        const boxes = document.querySelectorAll('.conditional-box-3');
+        
+        boxes.forEach(box => {
+            box.style.display = 'none';
+            box.querySelectorAll('select').forEach(sel => sel.value = '');
+            box.querySelectorAll('input[type="checkbox"]').forEach(chk => chk.checked = false);
+        });
+
+        if (selectedValue === 'Epithelial') document.getElementById('box-epithelial-3').style.display = 'block';
+        else if (selectedValue === 'Cast') document.getElementById('box-cast-3').style.display = 'block';
+        else if (selectedValue === 'Crystal') document.getElementById('box-crystal-3').style.display = 'block';
+        else if (selectedValue === 'Yeast') document.getElementById('box-yeast-3').style.display = 'block';
+        else if (selectedValue === 'Sperm') document.getElementById('box-sperm-3').style.display = 'block';
+        else if (selectedValue === 'Dysmorphic red blood cell') {
+            document.getElementById('box-dysmorphic-3').style.display = 'block';
+            document.getElementById('dysmorphicCheck3').checked = true;
+        }
+    }
+
     function setAllAutoNegative() {
         document.querySelectorAll('.auto-select').forEach(select => {
             select.value = 'Negative';
@@ -808,7 +1010,7 @@
                 
                 stopCameraScan();
                 
-                if(cleanText.length === 13) {
+                if(cleanText.length >= 9 && cleanText.length <= 20) {
                     setTimeout(() => { document.getElementById('nextBtn').click(); }, 400);
                 }
             },
@@ -844,25 +1046,27 @@
 
     sampleIdInput.addEventListener('input', function() {
         this.value = this.value.replace(/[^0-9]/g, ''); 
-        if(this.value.length === 13) {
+        const len = this.value.length;
+        if(len >= 9 && len <= 20) {
             this.classList.replace('border-primary', 'border-success');
             this.classList.replace('border-danger', 'border-success');
-            document.getElementById('barcodeHelper').innerHTML = '<span class="text-success fw-bold">✅ ครบ 13 หลัก</span>';
+            document.getElementById('barcodeHelper').innerHTML = `<span class="text-success fw-bold">✅ ถูกต้อง (${len} หลัก)</span>`;
         } else {
             this.classList.replace('border-success', 'border-primary');
             this.classList.replace('border-danger', 'border-primary');
-            document.getElementById('barcodeHelper').innerHTML = 'กดปุ่ม "เปิดกล้อง" หรือใช้เครื่องสแกน';
+            document.getElementById('barcodeHelper').innerHTML = `กดปุ่ม "เปิดกล้อง" หรือใช้เครื่องสแกน (ปัจจุบัน ${len} หลัก)`;
         }
     });
 
     sampleIdInput.addEventListener('keydown', function(event) {
         if (event.key === 'Enter') {
             event.preventDefault(); 
-            if (this.value.length === 13) {
+            const len = this.value.length;
+            if (len >= 9 && len <= 20) {
                 document.getElementById('nextBtn').click(); 
             } else {
                 this.classList.replace('border-primary', 'border-danger');
-                document.getElementById('barcodeHelper').innerHTML = '<span class="text-danger fw-bold">❌ ไม่ครบ 13 หลัก</span>';
+                document.getElementById('barcodeHelper').innerHTML = `<span class="text-danger fw-bold">❌ ต้องมี 9 - 20 หลัก (ปัจจุบัน ${len} หลัก)</span>`;
                 this.style.animation = 'shake 0.5s';
                 setTimeout(() => { this.style.animation = ''; }, 500);
             }
@@ -886,12 +1090,12 @@
             const result = await response.json();
             
             if(result.status === 'success') {
-                alertBox.innerHTML = `<div class="alert alert-success fw-bold text-center mt-3">✅ บันทึกหมายเลข ${dataObject['หมายเลขบนตัวอย่าง 13 หลัก']} สำเร็จ!</div>`;
+                alertBox.innerHTML = `<div class="alert alert-success fw-bold text-center mt-3">✅ บันทึกหมายเลข ${dataObject['หมายเลขบนตัวอย่าง']} สำเร็จ!</div>`;
                 
                 form.reset(); 
                 setInitialTimestamp();
                 clearBarcode();
-                handleCellType1Change(); // รีเซ็ตการแสดงผล Dynamic Box ทั้งหมด
+                handleCellType1Change();
                 
                 document.getElementsByClassName("step")[currentTab].classList.remove("active");
                 currentTab = 0; 
