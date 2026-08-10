@@ -118,12 +118,12 @@
                 <div class="row g-3">
                     <div class="col-md-12">
                         <label class="fs-5 text-primary">
-                            หมายเลขบนตัวอย่าง 13 หลัก (9 - 20 หลัก) <span class="text-danger">*</span>
+                            หมายเลขบนตัวอย่าง (9 - 20 หลัก) <span class="text-danger">*</span>
                         </label>
                         
                         <div class="input-group input-group-lg mt-2">
                             <input type="text" class="form-control border-primary text-center fw-bold fs-3 tracking-widest" 
-                                   name="หมายเลขบนตัวอย่าง 13 หลัก" id="sampleId" 
+                                   name="หมายเลขบนตัวอย่าง" id="sampleId" 
                                    maxlength="20" placeholder="สแกน หรือ พิมพ์ตัวเลข 9-20 หลัก..." required>
                             
                             <button class="btn btn-primary" type="button" id="startCameraBtn" onclick="startCameraScan()">
@@ -821,7 +821,7 @@
 </div>
 
 <script>
-    const GAS_URL = 'https://script.google.com/macros/s/AKfycbymiw0hym5BPBm5mfpMXo5_gXrLTf6Oykq9UAwmxAy4SwYM9yovZtsc-DBucxFs24F4Vw/exec';
+    const GAS_URL = 'ใส่_URL_ที่ได้จากการ_Deploy_Web_App_ตรงนี้';
 
     // ================= การจัดการ Multi-step =================
     let currentTab = 0; showTab(currentTab); 
@@ -1075,50 +1075,56 @@
 
     // ================= ส่งข้อมูลไป GAS (พร้อมแปลงช่วงตัวเลขเติม ' นำหน้า) =================
     async function submitForm() {
-        const form = document.getElementById('urinalysisForm');
-        const nextBtn = document.getElementById('nextBtn');
-        const alertBox = document.getElementById('alertBox');
-        
-        nextBtn.disabled = true; document.getElementById('prevBtn').disabled = true;
-        nextBtn.innerHTML = '<span class="spinner-border spinner-border-sm"></span> กำลังบันทึก...';
-        
-        const formData = new FormData(form);
-        const dataObject = {};
+    const form = document.getElementById('urinalysisForm');
+    const nextBtn = document.getElementById('nextBtn');
+    const alertBox = document.getElementById('alertBox');
+    
+    nextBtn.disabled = true; 
+    document.getElementById('prevBtn').disabled = true;
+    nextBtn.innerHTML = '<span class="spinner-border spinner-border-sm"></span> กำลังบันทึก...';
+    
+    const formData = new FormData(form);
+    const dataObject = {};
 
-        // ตรวจสอบข้อมูลก่อนส่ง: ถ้าเป็นค่าช่วงตัวเลข (เช่น 0-1, 1-2, >20) ให้เติม ' นำหน้า
-        for (let [key, value] of formData.entries()) {
-            if (/^(\d+-\d+|>\d+)$/.test(value)) {
-                dataObject[key] = "'" + value;
-            } else {
-                dataObject[key] = value;
-            }
-        }
-
-        try {
-            const response = await fetch(GAS_URL, { method: 'POST', body: JSON.stringify(dataObject) });
-            const result = await response.json();
-            
-            if(result.status === 'success') {
-                alertBox.innerHTML = `<div class="alert alert-success fw-bold text-center mt-3">✅ บันทึกหมายเลข ${dataObject['หมายเลขบนตัวอย่าง 13 หลัก']} สำเร็จ!</div>`;
-                
-                form.reset(); 
-                setInitialTimestamp();
-                clearBarcode();
-                handleCellType1Change();
-                
-                document.getElementsByClassName("step")[currentTab].classList.remove("active");
-                currentTab = 0; 
-                showTab(currentTab);
-                
-            } else throw new Error(result.message);
-        } catch (error) {
-            alertBox.innerHTML = `<div class="alert alert-danger mt-3">❌ เกิดข้อผิดพลาด: ${error.message}</div>`;
-        } finally {
-            nextBtn.disabled = false; document.getElementById('prevBtn').disabled = false;
-            nextBtn.innerHTML = "บันทึกข้อมูล <i class='fa-solid fa-paper-plane ms-2'></i>";
-            setTimeout(() => { alertBox.innerHTML = ''; }, 4000);
+    // เติม ' นำหน้าเฉพาะค่าช่วงตัวเลข (เช่น 0-1, >20)
+    // ช่อง "หมายเลขบนตัวอย่าง" จะส่งเป็นตัวเลขเพรียวๆ ไม่เติม '
+    for (let [key, value] of formData.entries()) {
+        if (/^(\d+-\d+|>\d+)$/.test(value)) {
+            dataObject[key] = "'" + value;
+        } else {
+            dataObject[key] = value;
         }
     }
+
+    try {
+        const response = await fetch(GAS_URL, { 
+            method: 'POST', 
+            body: JSON.stringify(dataObject) 
+        });
+        const result = await response.json();
+        
+        if(result.status === 'success') {
+            alertBox.innerHTML = `<div class="alert alert-success fw-bold text-center mt-3">✅ บันทึกหมายเลข ${dataObject['หมายเลขบนตัวอย่าง']} สำเร็จ!</div>`;
+            
+            form.reset(); 
+            setInitialTimestamp();
+            clearBarcode();
+            handleCellType1Change();
+            
+            document.getElementsByClassName("step")[currentTab].classList.remove("active");
+            currentTab = 0; 
+            showTab(currentTab);
+            
+        } else throw new Error(result.message);
+    } catch (error) {
+        alertBox.innerHTML = `<div class="alert alert-danger mt-3">❌ เกิดข้อผิดพลาด: ${error.message}</div>`;
+    } finally {
+        nextBtn.disabled = false; 
+        document.getElementById('prevBtn').disabled = false;
+        nextBtn.innerHTML = "บันทึกข้อมูล <i class='fa-solid fa-paper-plane ms-2'></i>";
+        setTimeout(() => { alertBox.innerHTML = ''; }, 4000);
+    }
+}
 </script>
 
 </body>
