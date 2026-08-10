@@ -821,7 +821,8 @@
 </div>
 
 <script>
-    const GAS_URL = 'https://script.google.com/macros/s/AKfycbymiw0hym5BPBm5mfpMXo5_gXrLTf6Oykq9UAwmxAy4SwYM9yovZtsc-DBucxFs24F4Vw/exec';
+    const GAS_URL = 'https://script.google.com/macros/s/AKfycbymiw0hym5BPBm5mfpMXo5_gXrLTf6Oykq9UAwmxAy4SwYM9yovZtsc-DBucxFs24F4Vw/exec
+';
 
     // ================= การจัดการ Multi-step =================
     let currentTab = 0; showTab(currentTab); 
@@ -1073,58 +1074,43 @@
         }
     });
 
-    // ================= ส่งข้อมูลไป GAS (พร้อมแปลงช่วงตัวเลขเติม ' นำหน้า) =================
+    // ================= ส่งข้อมูลไป GAS =================
     async function submitForm() {
-    const form = document.getElementById('urinalysisForm');
-    const nextBtn = document.getElementById('nextBtn');
-    const alertBox = document.getElementById('alertBox');
-    
-    nextBtn.disabled = true; 
-    document.getElementById('prevBtn').disabled = true;
-    nextBtn.innerHTML = '<span class="spinner-border spinner-border-sm"></span> กำลังบันทึก...';
-    
-    const formData = new FormData(form);
-    const dataObject = {};
+        const form = document.getElementById('urinalysisForm');
+        const nextBtn = document.getElementById('nextBtn');
+        const alertBox = document.getElementById('alertBox');
+        
+        nextBtn.disabled = true; document.getElementById('prevBtn').disabled = true;
+        nextBtn.innerHTML = '<span class="spinner-border spinner-border-sm"></span> กำลังบันทึก...';
+        
+        const formData = new FormData(form);
+        const dataObject = Object.fromEntries(formData.entries());
 
-    // เติม ' นำหน้าเฉพาะค่าช่วงตัวเลข (เช่น 0-1, >20)
-    // ช่อง "หมายเลขบนตัวอย่าง" จะส่งเป็นตัวเลขเพรียวๆ ไม่เติม '
-    for (let [key, value] of formData.entries()) {
-        if (/^(\d+-\d+|>\d+)$/.test(value)) {
-            dataObject[key] = "'" + value;
-        } else {
-            dataObject[key] = value;
+        try {
+            const response = await fetch(GAS_URL, { method: 'POST', body: JSON.stringify(dataObject) });
+            const result = await response.json();
+            
+            if(result.status === 'success') {
+                alertBox.innerHTML = `<div class="alert alert-success fw-bold text-center mt-3">✅ บันทึกหมายเลข ${dataObject['หมายเลขบนตัวอย่าง']} สำเร็จ!</div>`;
+                
+                form.reset(); 
+                setInitialTimestamp();
+                clearBarcode();
+                handleCellType1Change();
+                
+                document.getElementsByClassName("step")[currentTab].classList.remove("active");
+                currentTab = 0; 
+                showTab(currentTab);
+                
+            } else throw new Error(result.message);
+        } catch (error) {
+            alertBox.innerHTML = `<div class="alert alert-danger mt-3">❌ เกิดข้อผิดพลาด: ${error.message}</div>`;
+        } finally {
+            nextBtn.disabled = false; document.getElementById('prevBtn').disabled = false;
+            nextBtn.innerHTML = "บันทึกข้อมูล <i class='fa-solid fa-paper-plane ms-2'></i>";
+            setTimeout(() => { alertBox.innerHTML = ''; }, 4000);
         }
     }
-
-    try {
-        const response = await fetch(GAS_URL, { 
-            method: 'POST', 
-            body: JSON.stringify(dataObject) 
-        });
-        const result = await response.json();
-        
-        if(result.status === 'success') {
-            alertBox.innerHTML = `<div class="alert alert-success fw-bold text-center mt-3">✅ บันทึกหมายเลข ${dataObject['หมายเลขบนตัวอย่าง']} สำเร็จ!</div>`;
-            
-            form.reset(); 
-            setInitialTimestamp();
-            clearBarcode();
-            handleCellType1Change();
-            
-            document.getElementsByClassName("step")[currentTab].classList.remove("active");
-            currentTab = 0; 
-            showTab(currentTab);
-            
-        } else throw new Error(result.message);
-    } catch (error) {
-        alertBox.innerHTML = `<div class="alert alert-danger mt-3">❌ เกิดข้อผิดพลาด: ${error.message}</div>`;
-    } finally {
-        nextBtn.disabled = false; 
-        document.getElementById('prevBtn').disabled = false;
-        nextBtn.innerHTML = "บันทึกข้อมูล <i class='fa-solid fa-paper-plane ms-2'></i>";
-        setTimeout(() => { alertBox.innerHTML = ''; }, 4000);
-    }
-}
 </script>
 
 </body>
